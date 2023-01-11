@@ -40,9 +40,9 @@ public class Player {
         this.money = money;
     }
 
-    //public int buyVocal() {
-    //    if (money >= ) {
-
-    //    }
-    //}
+    public int buyVocal() {
+        if (money >= definitions.CANTIDAD_VOCAL) {
+            if ()
+        }
+    }
 }
