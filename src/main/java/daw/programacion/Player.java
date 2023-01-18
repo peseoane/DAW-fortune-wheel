@@ -1,5 +1,7 @@
 package daw.programacion;
 
+import java.util.Scanner;
+
 public class Player {
     private String name;
     private int money;
@@ -43,6 +45,15 @@ public class Player {
     /*public int buyVocal() {
         if (money >= definitions.CANTIDAD_VOCAL) {
             if ()
+        }
+    }*/
+
+    /* estructura de resolver panel
+    public void resolvePanel() {
+        //Probablemente mejor pasarlo a definitions
+        Scanner teclado = new Scanner(System.in, "ISO-8859-1");
+        String solution = teclado.nextLine();
+        for (int i = 0; i < solution.length(); i++) {
         }
     }*/
 }
