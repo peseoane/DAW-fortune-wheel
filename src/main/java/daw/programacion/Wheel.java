@@ -24,20 +24,23 @@ public class Wheel {
         // Genera un entero aleatorio que esté comprendido entre 12 y 30.
         int fuerzaTirada = (int) (Math.random() * (30 - 12 + 1) + 12);
 
-
-
     /* Leer en un bucle del array en cada pasada hay que leer n, n+1 y n+2, en caso de que n+1 o n+2 estén fuera
         de rango deben leerse desde la posición 0 del array. */
 
         int casillaInicio = 2;
         int i = 0;
-        StringBuffer activeRuleta = new StringBuffer();
+        StringBuilder activeRuleta = new StringBuilder();
         i = casillaInicio;
-
         for (int j = 0; j < fuerzaTirada; j++) {
 
-            if (j > ruleta.length) {
+            System.out.println("Fuerza de la tirada: " + fuerzaTirada);
+            System.out.println("Casilla de inicio: " + casillaInicio);
+            System.out.println("Casilla actual: " + i);
+
+            if (i >= ruleta.length - 1) {
+                System.out.println("I ES CERO");
                 i = 0;
+
             } else {
                 i++;
             }
@@ -59,7 +62,6 @@ public class Wheel {
                 String StringLength = String.format(ruletaTemplate, ruleta[i], ruleta[i + 1], ruleta[i + 2]);
                 wheelArrow(StringLength);
                 System.out.printf(ruletaTemplate, ruleta[i], ruleta[i + 1], ruleta[i + 2]);
-
                 // Guardar ruleta[i+1] en activeRuleta, como es un stringbuffer antes borrar el contenido previo.
                 activeRuleta.setLength(0);
                 activeRuleta.append(ruleta[i + 1]);
