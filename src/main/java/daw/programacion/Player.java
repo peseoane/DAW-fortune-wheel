@@ -8,6 +8,8 @@ public class Player {
   private int money;
   private boolean turn;
 
+  private int force;
+
   /**
    * En caso de que inicie el juego, el dinero empieza en 0
    * @param name nombre jugador
@@ -15,6 +17,7 @@ public class Player {
   public Player(String name) {
     this.name = name;
     this.money = 0;
+    this.force = (int) (Math.random() * (30 - 12 + 1) + 12);
   }
 
   /**
@@ -25,6 +28,7 @@ public class Player {
   public Player(String name, int money) {
     this.name = name;
     this.money = money;
+    this.force = (int) (Math.random() * (30 - 12 + 1) + 12);
   }
 
   public String getName() {
