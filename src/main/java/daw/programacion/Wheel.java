@@ -38,7 +38,11 @@ public class Wheel {
                       |   %s  |    %s  |   %s  |
                       """;
 
-  private static int calcularFuerza() {
+  private static int calcularFuerza(int force) {
+
+      // Aceptar force como seed de un generador de aleatorios entre 40 y 10
+
+
     return (int) (Math.random() * (40 - 12 + 1) + 12);
   }
 
@@ -65,7 +69,8 @@ public class Wheel {
     int i = 0;
     StringBuilder activeRuleta = new StringBuilder();
     i = casillaInicio;
-    for (int j = 0; j < calcularFuerza(); j++) {
+
+    for (int j = 0; j < calcularFuerza(player.getForce()); j++) {
       if (i >= ruleta.length - 1) {
         System.out.println("I ES CERO");
         i = 0;

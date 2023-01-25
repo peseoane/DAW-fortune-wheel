@@ -43,6 +43,10 @@ public class Player {
     return money;
   }
 
+  public int getForce() {
+    return force;
+  }
+
   public void setMoney(int money) {
     this.money = money;
   }
