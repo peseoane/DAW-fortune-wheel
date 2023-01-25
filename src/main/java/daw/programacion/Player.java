@@ -3,52 +3,52 @@ package daw.programacion;
 import java.util.Scanner;
 
 public class Player {
-    private String name;
-    private int money;
-    private boolean turn;
 
-    /**
-     * En caso de que inicie el juego, el dinero empieza en 0
-     * @param name nombre jugador
-     */
-    public Player(String name) {
-        this.name = name;
-        this.money = 0;
-    }
+  private String name;
+  private int money;
+  private boolean turn;
 
-    /**
-     * Constructor cuando un jugador mantiene dinero de otra ronda.
-     * @param name nombre de jugador
-     * @param money sobrecarga, en caso de tener dinero especificarlo
-     */
-    public Player(String name, int money) {
-        this.name = name;
-        this.money = money;
-    }
+  /**
+   * En caso de que inicie el juego, el dinero empieza en 0
+   * @param name nombre jugador
+   */
+  public Player(String name) {
+    this.name = name;
+    this.money = 0;
+  }
 
-    public String getName() {
-        return name;
-    }
+  /**
+   * Constructor cuando un jugador mantiene dinero de otra ronda.
+   * @param name nombre de jugador
+   * @param money sobrecarga, en caso de tener dinero especificarlo
+   */
+  public Player(String name, int money) {
+    this.name = name;
+    this.money = money;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public int getMoney() {
-        return money;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setMoney(int money) {
-        this.money = money;
-    }
+  public int getMoney() {
+    return money;
+  }
 
-    /*public int buyVocal() {
+  public void setMoney(int money) {
+    this.money = money;
+  }
+  /*public int buyVocal() {
         if (money >= definitions.CANTIDAD_VOCAL) {
             if ()
         }
     }*/
 
-    /* estructura de resolver panel
+  /* estructura de resolver panel
     public void resolvePanel() {
         //Probablemente mejor pasarlo a definitions
         Scanner teclado = new Scanner(System.in, "ISO-8859-1");
