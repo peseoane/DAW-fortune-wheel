@@ -56,12 +56,14 @@ public class Player {
         }
     }*/
 
-  /* estructura de resolver panel
+    //estructura de resolver panel
     public void resolvePanel() {
-        //Probablemente mejor pasarlo a definitions
-        Scanner teclado = new Scanner(System.in, "ISO-8859-1");
-        String solution = teclado.nextLine();
-        for (int i = 0; i < solution.length(); i++) {
-        }
-    }*/
+      System.out.println("¿Que frase crees que es el panel?");
+      String solution = definitions.teclado.nextLine();
+      if (Panel.frases[0].equalsIgnoreCase(solution)) {
+        System.out.println("Correcto");
+      } else {
+        System.out.println("No es correcto");
+      }
+    }
 }
