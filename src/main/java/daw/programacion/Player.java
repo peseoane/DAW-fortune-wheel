@@ -49,12 +49,17 @@ public class Player {
   public void setMoney(int money) {
     this.money = money;
   }
-  /*public int buyVocal() {
-        if (money >= definitions.CANTIDAD_VOCAL) {
-            if ()
-        }
-    }*/
 
+  public void buyVocal() {
+    System.out.println("Que vocal quiere comprar?");
+    String vocal = definitions.teclado.nextLine();
+    if (money >= definitions.CANTIDAD_VOCAL) {
+      switch(vocal.charAt(0)) {
+        case 'a', 'e', 'i', 'o', 'u' -> money = money - definitions.CANTIDAD_VOCAL;
+        default -> System.err.println("Introduce una vocal");
+      }
+    }
+  }
   /**
    * Método para resolver panel
    */
