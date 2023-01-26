@@ -56,8 +56,10 @@ public class Player {
         }
     }*/
 
-    //estructura de resolver panel
-    public void resolvePanel() {
+  /**
+   * Método para resolver panel
+   */
+  public void resolvePanel() {
       System.out.println("¿Que frase crees que es el panel?");
       String solution = definitions.teclado.nextLine();
       if (Panel.frases[0].equalsIgnoreCase(solution)) {
