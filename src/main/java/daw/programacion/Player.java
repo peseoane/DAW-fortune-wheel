@@ -1,5 +1,4 @@
 package daw.programacion;
-
 import java.util.Scanner;
 
 public class Player {
@@ -59,10 +58,10 @@ public class Player {
   /**
    * Método para resolver panel
    */
-  public void resolvePanel() {
+  public static void resolvePanel() {
       System.out.println("¿Que frase crees que es el panel?");
       String solution = definitions.teclado.nextLine();
-      if (Panel.frases[0].equalsIgnoreCase(solution)) {
+      if (frases[0].equalsIgnoreCase(solution)) {
         System.out.println("Correcto");
       } else {
         System.out.println("No es correcto");
