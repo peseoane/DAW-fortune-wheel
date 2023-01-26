@@ -39,9 +39,7 @@ public class Wheel {
                       """;
 
   private static int calcularFuerza(int force) {
-
-      // Aceptar force como seed de un generador de aleatorios entre 40 y 10
-
+    // Aceptar force como seed de un generador de aleatorios entre 40 y 10
 
     return (int) (Math.random() * (40 - 12 + 1) + 12);
   }
