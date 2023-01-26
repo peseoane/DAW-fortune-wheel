@@ -61,7 +61,7 @@ public class Player {
   public static void resolvePanel() {
       System.out.println("¿Que frase crees que es el panel?");
       String solution = definitions.teclado.nextLine();
-      if (frases[0].equalsIgnoreCase(solution)) {
+      if (Panel.frases[0].equalsIgnoreCase(solution)) {
         System.out.println("Correcto");
       } else {
         System.out.println("No es correcto");
