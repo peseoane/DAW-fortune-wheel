@@ -1,4 +1,6 @@
-# Created by https://www.toptal.com/developers/gitignore/api/java
+node_modules
+
+Created by https://www.toptal.com/developers/gitignore/api/java
 # Edit at https://www.toptal.com/developers/gitignore?templates=java
 # Created by https://www.toptal.com/developers/gitignore/api/netbeans
 # Edit at https://www.toptal.com/developers/gitignore?templates=netbeans
