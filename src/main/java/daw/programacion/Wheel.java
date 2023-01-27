@@ -33,15 +33,17 @@ public class Wheel {
     "200",
   };
 
-  static final String ruletaTemplate =
+  private static final String ruletaTemplate =
     """
                       |   %s  |    %s  |   %s  |
                       """;
 
   private static int calcularFuerza(int force) {
     // Aceptar force como seed de un generador de aleatorios entre 40 y 10
-
-    return (int) (Math.random() * (40 - 12 + 1) + 12);
+    int max = 40;
+    int min = 12;
+    int random = (int) (Math.random() * (max - min + 1) + min);
+    return random;
   }
 
   private static void wheelArrow(String StringLength) {
@@ -54,6 +56,8 @@ public class Wheel {
     }
     System.out.println();
   }
+
+
 
   public static String ruleta(Player player) {
     // Vamos a crear un array con los posibles valores de la ruleta
@@ -69,12 +73,12 @@ public class Wheel {
     i = casillaInicio;
 
     for (int j = 0; j < calcularFuerza(player.getForce()); j++) {
-      if (i >= ruleta.length - 1) {
+    if (i >= ruleta.length - 1) {
         System.out.println("I ES CERO");
         i = 0;
-      } else {
+    } else {
         i++;
-      }
+    }
 
       if (i == ruleta.length - 1) {
         String StringLength = String.format(
