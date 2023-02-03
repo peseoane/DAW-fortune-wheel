@@ -1,29 +1,31 @@
 package daw.programacion;
 
 public class Panel {
-    public static String[] phrases = {"Confuso, dudoso y oscuro"}; //"Sin planes, sin horarios y sin móviles", "Ni muerta"
-    public static char[][] hidden = new char[phrases.length][];
+    public static String[] phrases = {"CONFUSO, DUDOSO Y OSCURO", "SIN PLANES, SIN HORARIOS Y SIN MÓVILES"}; //"SIN PLANES, SIN HORARIOS Y SIN MÓVILES", "Ni muerta"
+    public static char[] hidden = new char[phrases[1].length()];
 
-    // Por ahora pongo 1 frase, para poder probar el programa
-    public static char[][] phraseToGuess() {
-        hidden = new char[phrases.length][];
-        for (int i = 0; i < phrases.length; i++) {
-            hidden[i] = new char[phrases[i].length()];
-            for (int j = 0; j < phrases[i].length(); j++) {
-                switch (phrases[i].charAt(j)) {
-                    case ',' -> hidden[i][j] = phrases[i].charAt(j);
-                    case '.' -> hidden[i][j] = phrases[i].charAt(j);
-                    case ' ' -> hidden[i][j] = phrases[i].charAt(j);
-                    case '!' -> hidden[i][j] = phrases[i].charAt(j);
-                    default -> hidden[i][j] = '*';
-                }
+    /**
+     * El método esconde la frase escogida en la ronda y convierte todos los caracteres que tiene por asteríscos.
+     * @return
+     */
+    public static char[] phraseToGuess() {
+        for (int i = 0; i < phrases[1].length(); i++) {
+            switch (phrases[1].charAt(i)) {
+                case ',':
+                case '.':
+                case ' ':
+                case '!':
+                    hidden[i] = phrases[1].charAt(i);
+                    break;
+                default:
+                    hidden[i] = '*';
             }
         }
+
         for (int i = 0; i < hidden.length; i++) {
-            for (int j = 0; j < hidden[i].length; j++) {
-                System.out.print(hidden[i][j]);
-            }
+            System.out.print(hidden[i]);
         }
+
         System.out.println();
         return hidden;
     }
@@ -32,4 +34,23 @@ public class Panel {
     public static void showClue() {
         System.out.println("La frase son 3 sinónimos");
     }
+
+    public static void showConsonant(char[] hidden) {
+        System.out.println("Que consonante quieres revelar?");
+        String consonant = definitions.teclado.nextLine().toUpperCase();
+        if (consonant.equalsIgnoreCase("a") || consonant.equalsIgnoreCase("e") || consonant.equalsIgnoreCase("i") || consonant.equalsIgnoreCase("o") || consonant.equalsIgnoreCase("u")) {
+            System.err.println("Las vocales no se pueden revelar así");
+        } else {
+            for (int i = 0; i < hidden.length; i++) {
+                if (phrases[1].charAt(i) == consonant.charAt(0)) {
+                    hidden[i] = phrases[1].charAt(i);
+                }
+            }
+        }
+
+        for (int i = 0; i < hidden.length; i++) {
+            System.out.print(hidden[i]);
+        }
+    }
+
 }
