@@ -1,4 +1,5 @@
 package daw.programacion;
+
 import java.util.Scanner;
 
 public class definitions {

@@ -1,11 +1,13 @@
 package daw.programacion;
 
 public class Panel {
-    public static String[] phrases = {"CONFUSO, DUDOSO Y OSCURO", "SIN PLANES, SIN HORARIOS Y SIN MÓVILES"}; //"SIN PLANES, SIN HORARIOS Y SIN MÓVILES", "Ni muerta"
+
+    public static String[] phrases = {"CONFUSO, DUDOSO Y OSCURO", "SIN PLANES, SIN HORARIOS Y SIN MÓVILES",}; //"SIN PLANES, SIN HORARIOS Y SIN MÓVILES", "Ni muerta"
     public static char[] hidden = new char[phrases[1].length()];
 
     /**
      * El método esconde la frase escogida en la ronda y convierte todos los caracteres que tiene por asteríscos.
+     *
      * @return
      */
     public static char[] phraseToGuess() {
@@ -52,5 +54,4 @@ public class Panel {
             System.out.print(hidden[i]);
         }
     }
-
 }
