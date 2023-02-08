@@ -1,23 +1,27 @@
 package daw.programacion;
 
 public class Panel {
+    public Panel() {
+        phrases = Sqlite.obtenerEnigmaNuevo();
+        Sqlite.darBajaEigma(phrases);
+    }
+    
+    public static char[] hidden;
 
-    public static String[] phrases = {"CONFUSO, DUDOSO Y OSCURO", "SIN PLANES, SIN HORARIOS Y SIN MÓVILES",}; //"SIN PLANES, SIN HORARIOS Y SIN MÓVILES", "Ni muerta"
-    public static char[] hidden = new char[phrases[1].length()];
-
+    public static String phrases;
     /**
      * El método esconde la frase escogida en la ronda y convierte todos los caracteres que tiene por asteríscos.
      *
      * @return
      */
-    public static char[] phraseToGuess() {
-        for (int i = 0; i < phrases[1].length(); i++) {
-            switch (phrases[1].charAt(i)) {
+    public char[] phraseToGuess() {
+        for (int i = 0; i < phrases.length(); i++) {
+            switch (phrases.charAt(i)) {
                 case ',':
                 case '.':
                 case ' ':
                 case '!':
-                    hidden[i] = phrases[1].charAt(i);
+                    hidden[i] = phrases.charAt(i);
                     break;
                 default:
                     hidden[i] = '*';
@@ -33,7 +37,7 @@ public class Panel {
     }
 
     // Método para dar pistas sobre la frase que tenemos en esa ronda
-    public static void showClue() {
+    public void showClue() {
         System.out.println("La frase son 3 sinónimos");
     }
 
@@ -44,8 +48,8 @@ public class Panel {
             System.err.println("Las vocales no se pueden revelar así");
         } else {
             for (int i = 0; i < hidden.length; i++) {
-                if (phrases[1].charAt(i) == consonant.charAt(0)) {
-                    hidden[i] = phrases[1].charAt(i);
+                if (phrases.charAt(i) == consonant.charAt(0)) {
+                    hidden[i] = phrases.charAt(i);
                 }
             }
         }

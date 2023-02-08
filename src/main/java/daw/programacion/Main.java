@@ -1,11 +1,12 @@
 package daw.programacion;
 
+import static daw.programacion.Player.resolvePanel;
+
 public class Main {
 
   public static void main(String[] args) {
-    System.out.println("Hello, world!");
-    String resultado = Sqlite.conector(Sqlite.queryNoContestada());
-    Sqlite.conector(Sqlite.anularQuery(resultado));
-    System.out.println(resultado);
+
+    Panel panel = new Panel();
+    Panel.showConsonant(Sqlite.obtenerEnigmaNuevo());
   }
 }

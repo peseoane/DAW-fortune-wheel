@@ -21,7 +21,7 @@ public class Sqlite {
       De la tabla "enigmas" seleccionar el enunciado que cumpla con las condiciones
      */
 
-  public static String queryNoContestada() {
+  public static String obtenerEnigmaNuevo() {
     return """
                 SELECT enunciado 
                 FROM enigmas 
@@ -30,7 +30,7 @@ public class Sqlite {
                 """;
   }
 
-  public static String anularQuery(String enigma) {
+  public static String darBajaEigma(String enigma) {
     return """
                 UPDATE enigmas 
                 SET contestada = 1 

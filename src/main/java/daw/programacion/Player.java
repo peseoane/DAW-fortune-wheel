@@ -51,7 +51,7 @@ public class Player {
     this.money = money;
   }
 
-  public void buyVocal() {
+  public void buyVocal(String panel) {
     System.out.println("Que vocal quiere comprar?");
     String vocal = definitions.teclado.nextLine();
     if (money >= definitions.CANTIDAD_VOCAL) {
@@ -66,10 +66,10 @@ public class Player {
   /**
    * Método para resolver panel
    */
-  public static void resolvePanel() {
+  public static void resolvePanel(String panel) {
     System.out.println("¿Que frase crees que es el panel?");
     String solution = definitions.teclado.nextLine();
-    if (Panel.phrases[0].equalsIgnoreCase(solution)) {
+    if (panel.equalsIgnoreCase(solution)) {
       System.out.println("Correcto");
     } else {
       System.out.println("No es correcto");
