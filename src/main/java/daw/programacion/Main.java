@@ -10,5 +10,6 @@ public class Main {
     panel.showConsonant(Panel.hidden);
     panel.showConsonant(Panel.hidden);
     panel.showConsonant(Panel.hidden);
+    Player.resolvePanel(Panel.phrases);
   }
 }
