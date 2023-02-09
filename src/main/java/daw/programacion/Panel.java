@@ -2,8 +2,9 @@ package daw.programacion;
 
 public class Panel {
     public Panel() {
-        phrases = Sqlite.obtenerEnigmaNuevo();
+        phrases = Sqlite.conector(Sqlite.obtenerEnigmaNuevo());
         Sqlite.darBajaEigma(phrases);
+        hidden = new char[phrases.length()];
     }
     
     public static char[] hidden;
@@ -26,7 +27,9 @@ public class Panel {
                 default:
                     hidden[i] = '*';
             }
+            System.out.print(phrases.charAt(i));
         }
+        System.out.println();
 
         for (int i = 0; i < hidden.length; i++) {
             System.out.print(hidden[i]);
@@ -43,7 +46,7 @@ public class Panel {
 
     public static void showConsonant(char[] hidden) {
         System.out.println("Que consonante quieres revelar?");
-        String consonant = definitions.teclado.nextLine().toUpperCase();
+        String consonant = definitions.teclado.nextLine();
         if (consonant.equalsIgnoreCase("a") || consonant.equalsIgnoreCase("e") || consonant.equalsIgnoreCase("i") || consonant.equalsIgnoreCase("o") || consonant.equalsIgnoreCase("u")) {
             System.err.println("Las vocales no se pueden revelar así");
         } else {
