@@ -1,10 +1,10 @@
-package daw.programacion;
+package daw.programacion.sql;
 
 import java.sql.*;
 
 // Error No suitable driver found for jdbc:sqlite:identifier.sqlite
 
-public class Sqlite {
+public class Connector {
 
   private static final String DATABASE_URL = "jdbc:sqlite:identifier.sqlite";
 
