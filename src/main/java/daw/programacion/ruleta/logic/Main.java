@@ -1,8 +1,6 @@
-package daw.programacion.logic;
+package daw.programacion.ruleta.logic;
 
-import daw.programacion.sql.Connector;
-
-import javax.swing.*;
+import daw.programacion.ruleta.sql.Connector;
 
 public class Main {
 

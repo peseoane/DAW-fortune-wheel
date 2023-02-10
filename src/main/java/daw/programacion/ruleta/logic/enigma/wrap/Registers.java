@@ -1,4 +1,4 @@
-package daw.programacion.logic.enigma.wrap;
+package daw.programacion.ruleta.logic.enigma.wrap;
 
 class Registers {
     int RA;

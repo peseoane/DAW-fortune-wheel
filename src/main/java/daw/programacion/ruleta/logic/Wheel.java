@@ -1,4 +1,4 @@
-package daw.programacion.logic;
+package daw.programacion.ruleta.logic;
 
 import java.awt.*;
 import java.awt.event.*;

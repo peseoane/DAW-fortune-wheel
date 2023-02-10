@@ -1,4 +1,4 @@
-package daw.programacion.logic;
+package daw.programacion.ruleta.logic;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;

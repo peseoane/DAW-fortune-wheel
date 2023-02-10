@@ -1,4 +1,4 @@
-package daw.programacion.logic;
+package prototipo;
 
 public class Player {
 
@@ -51,11 +51,11 @@ public class Player {
 
   public void buyVocal(Panel panel) {
     System.out.println("Que vocal quiere comprar?");
-    String vocal = HEADERS.teclado.nextLine();
-    if (money >= HEADERS.CANTIDAD_VOCAL) {
+    String vocal = definitions.teclado.nextLine();
+    if (money >= definitions.CANTIDAD_VOCAL) {
       switch (vocal.charAt(0)) {
         case 'a', 'e', 'i', 'o', 'u' -> money =
-          money - HEADERS.CANTIDAD_VOCAL;
+          money - definitions.CANTIDAD_VOCAL;
         default -> System.err.println("Introduce una vocal");
       }
     }
@@ -66,7 +66,7 @@ public class Player {
    */
   public static void resolvePanel(String panel) {
     System.out.println("¿Que frase crees que es el panel?");
-    String solution = HEADERS.teclado.nextLine();
+    String solution = definitions.teclado.nextLine();
     if (panel.equalsIgnoreCase(solution)) {
       System.out.println("Correcto");
     } else {
