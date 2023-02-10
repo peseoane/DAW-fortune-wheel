@@ -49,7 +49,7 @@ public class Player {
     this.money = money;
   }
 
-  public void buyVocal(String panel) {
+  public void buyVocal(Panel panel) {
     System.out.println("Que vocal quiere comprar?");
     String vocal = HEADERS.teclado.nextLine();
     if (money >= HEADERS.CANTIDAD_VOCAL) {

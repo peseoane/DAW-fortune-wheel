@@ -4,10 +4,11 @@ CREATE TABLE enigmas
 (
     id_enigma  INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
     contestada BOOLEAN      NOT NULL DEFAULT FALSE,
-    enunciado  VARCHAR(255) NOT NULL
+    enunciado  VARCHAR(255) NOT NULL,
+    pista      VARCHAR(255) NOT NULL DEFAULT 'No hay pista'
 );
 
--- Añadir datos a la tabla enigmas, estos serán 30 refranes
+-- Añadir datos a la tabla enigmas, estos serán 30 refranes, la columna 0 tendrá la pista y la columna 1 tendrá el refrán en si.
 INSERT INTO enigmas (enunciado)
 VALUES ('No hay mal que por bien no venga'),
        ('A caballo regalado no se le miran los dientes'),
@@ -31,3 +32,4 @@ VALUES ('No hay mal que por bien no venga'),
        ('Cada uno a su manera'),
        ('Cada uno a su gusto'),
        ('Cada uno a su aire');
+
