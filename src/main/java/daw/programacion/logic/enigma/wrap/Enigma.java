@@ -29,7 +29,7 @@ public class Enigma {
             System.out.println(token);
         }
 
-        Resultados resultados = enigma.assertFraseCompatible(enigma);
+        Registers resultados = enigma.assertFraseCompatible(enigma);
 
         System.out.println("RA: " + resultados.RA);
         System.out.println("RB: " + resultados.RB);
@@ -39,7 +39,7 @@ public class Enigma {
 
     }
 
-    private Resultados assertFraseCompatible(Enigma enigma) {
+    private Registers assertFraseCompatible(Enigma enigma) {
         int RA = 0;
         int RB = 0;
         int RC = 0;
@@ -49,39 +49,59 @@ public class Enigma {
         int RZ = 0;
 
         for (String token : enigma.fraseTokenizada) {
+
             switch (RX) {
                 case 0 -> {
-                    if (RA + token.length() <= 12) {
+                    if (++RZ + token.length() <= 12) {
                         RA++;
+                        RZ += token.length() + 1;
                     } else {
                         RX++;
+                        RZ = 0;
                     }
-                } case 1 -> {
-                    if (RB + token.length() <= 14) {
+                }
+                case 1 -> {
+                    if (++RZ + token.length() <= 14) {
                         RB++;
-                    } else  {
+                        RZ += token.length() + 1;
+                    } else {
                         RX++;
+                        RZ = 0;
                     }
-                } case 2 -> {
-                    if (RC + token.length() <= 14) {
+                }
+                case 2 -> {
+                    if (++RZ + token.length() <= 14) {
                         RC++;
-                    } else  {
+                        RZ += token.length() + 1;
+                    } else {
                         RX++;
+                        RZ = 0;
                     }
                 }
 
                 case 3 -> {
-                    if (RC + token.length() <= 12) {
+                    if (++RZ + token.length() <= 12) {
                         RD++;
-                    } else  {
+                        RZ += token.length() + 1;
+                    } else {
                         RX++;
+                        RZ = 0;
                     }
                 }
             }
+
+            System.out.printf("Token: %s%n", token);
+            System.out.println("this.RA: " + RA);
+            System.out.println("this.RB: " + RB);
+            System.out.println("this.RC: " + RC);
+            System.out.println("this.RD: " + RD);
+            System.out.println("this.RX: " + RX);
+            System.out.println("this.RZ: " + RZ);
+            System.out.println();
+
         }
 
-        return new Resultados(RA, RB, RC, RD);
+        return new Registers(RA, RB, RC, RD);
 
     }
-
 }
