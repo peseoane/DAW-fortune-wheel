@@ -29,17 +29,7 @@ public class Enigma {
     public static void main(String[] args) {
 
         Enigma enigma = new Enigma("Despiden al profe con una cadena humana de aplausos");
-        for (String token : enigma.fraseTokenizada) {
-            System.out.println(token);
-        }
-
         MatrixR4Int resultados = enigma.assertFraseCompatible(enigma);
-
-        System.out.println("RA: " + resultados.RA);
-        System.out.println("RB: " + resultados.RB);
-        System.out.println("RC: " + resultados.RC);
-        System.out.println("RD: " + resultados.RD);
-
 
     }
 
@@ -50,6 +40,10 @@ public class Enigma {
      * @return Retorno múltiple que contiene el array de palabras por cada línea.
      */
     private MatrixR4Int assertFraseCompatible(Enigma enigma) {
+
+        Logger logger = LogManager.getLogger(Main.class);
+        logger.info("-- CALCULANDO POSICIONES ENIGMA EN PANEL --");
+
         int tokensPorLinea0 = 1;
         int tokensPorLinea1 = 1;
         int tokensPorLinea2 = 1;
@@ -102,19 +96,25 @@ public class Enigma {
                         capacidadLocalLinea = 0;
                     }
                 }
+                case 4 -> {
+                    System.out.printf("Enigma incompatible con el panel");
+                    logger.error("Enigma incompatible con el panel");
+                }
             }
 
+            // read from main string args if debug is enabled
 
-            Logger logger = LogManager.getLogger(Main.class);
-            logger.info("Estado tokenizador");
-            logger.trace("Token: " + token);
-            logger.trace("this.tokensPorLinea0: " + tokensPorLinea0);
-            logger.trace("this.tokensPorLinea1: " + tokensPorLinea1);
-            logger.trace("this.tokensPorLinea2: " + tokensPorLinea2);
-            logger.trace("this.tokensPorLinea3: " + tokensPorLinea3);
-            logger.trace("this.RX: " + posicionLineaAnalizar);
-            logger.trace("this.capacidadLocalLinea: " + capacidadLocalLinea);
 
+
+
+            logger.debug("Token: " + token);
+            logger.debug("this.tokensPorLinea0: " + tokensPorLinea0);
+            logger.debug("this.tokensPorLinea1: " + tokensPorLinea1);
+            logger.debug("this.tokensPorLinea2: " + tokensPorLinea2);
+            logger.debug("this.tokensPorLinea3: " + tokensPorLinea3);
+            logger.debug("this.RX: " + posicionLineaAnalizar);
+            logger.debug("this.capacidadLocalLinea: " + capacidadLocalLinea);
+            logger.error("test");
         }
 
         return new MatrixR4Int(tokensPorLinea0, tokensPorLinea1, tokensPorLinea2, tokensPorLinea3);
