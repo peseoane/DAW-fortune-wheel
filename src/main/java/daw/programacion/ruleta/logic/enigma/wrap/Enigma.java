@@ -1,4 +1,7 @@
 package daw.programacion.ruleta.logic.enigma.wrap;
+import daw.programacion.ruleta.logic.Main;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Enigma {
 
@@ -24,12 +27,13 @@ public class Enigma {
     }
 
     public static void main(String[] args) {
-        Enigma enigma = new Enigma("Hola que tal estas");
+
+        Enigma enigma = new Enigma("Despiden al profe con una cadena humana de aplausos");
         for (String token : enigma.fraseTokenizada) {
             System.out.println(token);
         }
 
-        Registers resultados = enigma.assertFraseCompatible(enigma);
+        MatrixR4Int resultados = enigma.assertFraseCompatible(enigma);
 
         System.out.println("RA: " + resultados.RA);
         System.out.println("RB: " + resultados.RB);
@@ -39,69 +43,81 @@ public class Enigma {
 
     }
 
-    private Registers assertFraseCompatible(Enigma enigma) {
-        int RA = 0;
-        int RB = 0;
-        int RC = 0;
-        int RD = 0;
+    /**
+     * Dado que el panel no es un array perfecto, comprobamos que cada palabra del enigma cabe tanto en longitud global
+     * como por línea, si alguna palabra se corta, lanzamos excepción.
+     * @param enigma
+     * @return Retorno múltiple que contiene el array de palabras por cada línea.
+     */
+    private MatrixR4Int assertFraseCompatible(Enigma enigma) {
+        int tokensPorLinea0 = 1;
+        int tokensPorLinea1 = 1;
+        int tokensPorLinea2 = 1;
+        int tokensPorLinea3 = 1;
 
-        int RX = 0;
-        int RZ = 0;
+        int posicionLineaAnalizar = 0;
+        int capacidadLocalLinea = 0;
 
         for (String token : enigma.fraseTokenizada) {
 
-            switch (RX) {
+            switch (posicionLineaAnalizar) {
                 case 0 -> {
-                    if (++RZ + token.length() <= 12) {
-                        RA++;
-                        RZ += token.length() + 1;
+                    if (++capacidadLocalLinea + token.length() <= 12) {
+                        tokensPorLinea0++;
+                        capacidadLocalLinea++;
+                        capacidadLocalLinea += token.length();
                     } else {
-                        RX++;
-                        RZ = 0;
+                        posicionLineaAnalizar++;
+                        capacidadLocalLinea = 0;
                     }
                 }
                 case 1 -> {
-                    if (++RZ + token.length() <= 14) {
-                        RB++;
-                        RZ += token.length() + 1;
+                    if (++capacidadLocalLinea + token.length() <= 14) {
+                        tokensPorLinea1++;
+                        capacidadLocalLinea++;
+                        capacidadLocalLinea += token.length();
                     } else {
-                        RX++;
-                        RZ = 0;
+                        posicionLineaAnalizar++;
+                        capacidadLocalLinea = 0;
                     }
                 }
                 case 2 -> {
-                    if (++RZ + token.length() <= 14) {
-                        RC++;
-                        RZ += token.length() + 1;
+                    if (++capacidadLocalLinea + token.length() <= 14) {
+                        tokensPorLinea2++;
+                        capacidadLocalLinea++;
+                        capacidadLocalLinea += token.length();
                     } else {
-                        RX++;
-                        RZ = 0;
+                        posicionLineaAnalizar++;
+                        capacidadLocalLinea = 0;
                     }
                 }
 
                 case 3 -> {
-                    if (++RZ + token.length() <= 12) {
-                        RD++;
-                        RZ += token.length() + 1;
+                    if (++capacidadLocalLinea + token.length() <= 12) {
+                        tokensPorLinea3++;
+                        capacidadLocalLinea++;
+                        capacidadLocalLinea += token.length();
                     } else {
-                        RX++;
-                        RZ = 0;
+                        posicionLineaAnalizar++;
+                        capacidadLocalLinea = 0;
                     }
                 }
             }
 
-            System.out.printf("Token: %s%n", token);
-            System.out.println("this.RA: " + RA);
-            System.out.println("this.RB: " + RB);
-            System.out.println("this.RC: " + RC);
-            System.out.println("this.RD: " + RD);
-            System.out.println("this.RX: " + RX);
-            System.out.println("this.RZ: " + RZ);
-            System.out.println();
+
+            Logger logger = LogManager.getLogger(Main.class);
+            logger.info("Estado tokenizador");
+            logger.trace("Token: " + token);
+            logger.trace("this.tokensPorLinea0: " + tokensPorLinea0);
+            logger.trace("this.tokensPorLinea1: " + tokensPorLinea1);
+            logger.trace("this.tokensPorLinea2: " + tokensPorLinea2);
+            logger.trace("this.tokensPorLinea3: " + tokensPorLinea3);
+            logger.trace("this.RX: " + posicionLineaAnalizar);
+            logger.trace("this.capacidadLocalLinea: " + capacidadLocalLinea);
 
         }
 
-        return new Registers(RA, RB, RC, RD);
+        return new MatrixR4Int(tokensPorLinea0, tokensPorLinea1, tokensPorLinea2, tokensPorLinea3);
 
     }
 }
