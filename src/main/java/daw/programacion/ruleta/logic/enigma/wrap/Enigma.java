@@ -1,9 +1,12 @@
 package daw.programacion.ruleta.logic.enigma.wrap;
+
 import daw.programacion.ruleta.logic.Main;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Enigma {
+
+
 
     /*
     Un enigma está formado por un total de 12+14+14+12=52 casillas distribuidas de esa forma.
@@ -27,7 +30,6 @@ public class Enigma {
     }
 
     public static void main(String[] args) {
-
         Enigma enigma = new Enigma("Despiden al profe con una cadena humana de aplausos");
         MatrixR4Int resultados = enigma.assertFraseCompatible(enigma);
 
@@ -36,88 +38,39 @@ public class Enigma {
     /**
      * Dado que el panel no es un array perfecto, comprobamos que cada palabra del enigma cabe tanto en longitud global
      * como por línea, si alguna palabra se corta, lanzamos excepción.
+     *
      * @param enigma
      * @return Retorno múltiple que contiene el array de palabras por cada línea.
      */
     private MatrixR4Int assertFraseCompatible(Enigma enigma) {
-
         Logger logger = LogManager.getLogger(Main.class);
         logger.info("-- CALCULANDO POSICIONES ENIGMA EN PANEL --");
 
-        int tokensPorLinea0 = 1;
-        int tokensPorLinea1 = 1;
-        int tokensPorLinea2 = 1;
-        int tokensPorLinea3 = 1;
+        int[] filasTokenCapacidad = new int[4];
 
-        int posicionLineaAnalizar = 0;
-        int capacidadLocalLinea = 0;
+        int filaLongitud;
+        int filaActual = 0;
+        int filaAcumulador = 0;
 
         for (String token : enigma.fraseTokenizada) {
 
-            switch (posicionLineaAnalizar) {
-                case 0 -> {
-                    if (++capacidadLocalLinea + token.length() <= 12) {
-                        tokensPorLinea0++;
-                        capacidadLocalLinea++;
-                        capacidadLocalLinea += token.length();
-                    } else {
-                        posicionLineaAnalizar++;
-                        capacidadLocalLinea = 0;
-                    }
-                }
-                case 1 -> {
-                    if (++capacidadLocalLinea + token.length() <= 14) {
-                        tokensPorLinea1++;
-                        capacidadLocalLinea++;
-                        capacidadLocalLinea += token.length();
-                    } else {
-                        posicionLineaAnalizar++;
-                        capacidadLocalLinea = 0;
-                    }
-                }
-                case 2 -> {
-                    if (++capacidadLocalLinea + token.length() <= 14) {
-                        tokensPorLinea2++;
-                        capacidadLocalLinea++;
-                        capacidadLocalLinea += token.length();
-                    } else {
-                        posicionLineaAnalizar++;
-                        capacidadLocalLinea = 0;
-                    }
-                }
+            filaLongitud = (filaActual == 0 || filaActual == 3) ? 12 : 14;
 
-                case 3 -> {
-                    if (++capacidadLocalLinea + token.length() <= 12) {
-                        tokensPorLinea3++;
-                        capacidadLocalLinea++;
-                        capacidadLocalLinea += token.length();
-                    } else {
-                        posicionLineaAnalizar++;
-                        capacidadLocalLinea = 0;
-                    }
-                }
-                case 4 -> {
-                    System.out.printf("Enigma incompatible con el panel");
-                    logger.error("Enigma incompatible con el panel");
-                }
+            if (filaAcumulador + 1 + token.length() <= filaLongitud) {
+                filaAcumulador += 1 + token.length();
+                filasTokenCapacidad[filaActual]++;
+            }
+            else {
+                filaAcumulador = 0;
+                filaActual++;
+                filasTokenCapacidad[filaActual]++;
+                filaAcumulador = token.length() + 1;
             }
 
-            // read from main string args if debug is enabled
-
-
-
-
-            logger.debug("Token: " + token);
-            logger.debug("this.tokensPorLinea0: " + tokensPorLinea0);
-            logger.debug("this.tokensPorLinea1: " + tokensPorLinea1);
-            logger.debug("this.tokensPorLinea2: " + tokensPorLinea2);
-            logger.debug("this.tokensPorLinea3: " + tokensPorLinea3);
-            logger.debug("this.RX: " + posicionLineaAnalizar);
-            logger.debug("this.capacidadLocalLinea: " + capacidadLocalLinea);
-            logger.error("test");
+            logger.info(" @L" + filaActual + " ACU: " + filasTokenCapacidad[filaActual] + " len " + filaLongitud + " token: " + token);
         }
+        return null;
+    }}
 
-        return new MatrixR4Int(tokensPorLinea0, tokensPorLinea1, tokensPorLinea2, tokensPorLinea3);
 
-    }
-}
+
