@@ -1,4 +1,4 @@
-package daw.programacion.ruleta.logic.enigma.wrap;
+package daw.programacion.ruleta.logic.enigma;
 
 public class Casilla {
 
@@ -20,7 +20,8 @@ public class Casilla {
         }
     }
 
-    public String dbgString() {
-        return "Casilla [dbChar=" + dbChar + ", isVisible=" + isVisible + ", isSolved=" + isSolved + "]";
+    public void hacerVisibleCasilla(){
+        this.isVisible = true;
     }
+
 }
