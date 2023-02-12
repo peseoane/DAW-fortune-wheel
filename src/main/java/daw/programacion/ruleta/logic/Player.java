@@ -7,22 +7,11 @@ public class Player {
     static Logger logger = LogManager.getLogger(Main.class);
 
     private final int force;
-    private final Panel panel;
+    String casillaRuleta;
     private String name;
     private int money;
     private boolean turn;
 
-    /**
-     * En caso de que inicie el juego, el dinero empieza en 0
-     *
-     * @param name nombre jugador
-     */
-    public Player(String name, Panel panel) {
-        this.name = name;
-        this.money = 0;
-        this.force = (int) (Math.random() * (30 - 12 + 1) + 12);
-        this.panel = panel;
-    }
 
     /**
      * Constructor cuando un jugador mantiene dinero de otra ronda.
@@ -36,6 +25,13 @@ public class Player {
         this.force = (int) (Math.random() * (30 - 12 + 1) + 12);
     }
 
+    public String getCasillaRuleta() {
+        return casillaRuleta;
+    }
+
+    public void setCasillaRuleta(String casillaRuleta) {
+        this.casillaRuleta = casillaRuleta;
+    }
 
     public String getName() {
         return name;

@@ -5,7 +5,7 @@ CREATE TABLE enigmas
     id_enigma  INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT,
     contestada BOOLEAN      NOT NULL DEFAULT FALSE,
     enigma     VARCHAR(255) NOT NULL,
-    pista      VARCHAR(255) NOT NULL DEFAULT 'No hay pista'
+    pista      VARCHAR(255) NOT NULL DEFAULT 'REFRÁN'
 );
 
 DROP TABLE jugadores;

@@ -9,9 +9,10 @@ public class Wheel {
             |   %s  |    %s  |   %s  |
             """;
     private String resultadoRuleta;
+    private final Player player;
 
     public Wheel(Player player) {
-        this.resultadoRuleta = resultadoRuleta;
+        this.player = player;
     }
 
     public String girarRuleta(Player player) {

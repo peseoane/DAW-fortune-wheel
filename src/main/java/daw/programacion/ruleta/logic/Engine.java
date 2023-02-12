@@ -53,9 +53,24 @@ public class Engine {
 
     public int start() {
         logger.info("El juego ha comenzado");
-        while (player.getMoney() > 0) {
-            player.resolvePanel();
-        }
+        intentarResolverPanel();
+        wheel.girarRuleta(player);
+        logger.info(player.getCasillaRuleta());
+
         return 1;
+    }
+
+    public boolean intentarResolverPanel() {
+        System.out.println("Introduzca la respuesta");
+        String respuesta = HEADERS.teclado.nextLine();
+        if (respuesta.equals(panel.getEnigma())) {
+            System.out.println("Respuesta correcta");
+            player.setMoney(player.getMoney() + 120);
+            return true;
+        }
+        else {
+            System.out.println("Respuesta incorrecta");
+            return false;
+        }
     }
 }
