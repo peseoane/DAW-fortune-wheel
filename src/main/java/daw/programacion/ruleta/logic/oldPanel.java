@@ -1,15 +1,9 @@
 package daw.programacion.ruleta.logic;
 
-import daw.programacion.ruleta.sql.Connector;
-
 public class oldPanel {
     public static char[] hidden;
     public static String phrases;
 
-    public oldPanel() {
-        phrases = Connector.obtenerEnigmaNuevo();
-        Connector.darBajaEigma(phrases);
-    }
 
     public static void showConsonant(char[] hidden) {
         System.out.println("Que consonante quieres revelar?");

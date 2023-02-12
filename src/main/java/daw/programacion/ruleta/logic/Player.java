@@ -1,6 +1,5 @@
 package daw.programacion.ruleta.logic;
 
-import daw.programacion.ruleta.logic.enigma.Panel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

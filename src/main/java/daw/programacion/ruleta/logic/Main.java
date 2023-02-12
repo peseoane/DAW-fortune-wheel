@@ -1,6 +1,6 @@
 package daw.programacion.ruleta.logic;
 
-import daw.programacion.ruleta.logic.enigma.Panel;
+import daw.programacion.ruleta.sql.Driver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -9,10 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-
-        Player tester = new Player("Pepe", 100, new Panel("Hola que tal estas"));
-        
-        tester.resolvePanel();
+        Driver driver = new Driver();
 
     }
 }
