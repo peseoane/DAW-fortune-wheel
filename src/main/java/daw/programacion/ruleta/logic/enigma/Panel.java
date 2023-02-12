@@ -57,9 +57,8 @@ public class Panel {
 
             // Añadimos por cada n letra al array
             for (char c : token.toCharArray()) {
-                panel[row][col] = c;
+                panel[row][col++] = c;
                 getLogger().info("ROW: " + row + " COLUMNA: " + col + " CHAR: " + c + " TOKEN: " + token);
-                col++;
             }
 
             // Añadir un espacio entre palabras si no es la columna final
@@ -105,7 +104,7 @@ public class Panel {
     public String toString() {
         StringBuilder lineaEnigma = new StringBuilder();
         for (char[] linea : panelEnigma) {
-            for (int j = 0; j < panelEnigma.length; j++) {
+            for (int j = 0; j < linea.length; j++) {
                 // Añadir a un string builder cada linea
                 lineaEnigma.append(linea[j]);
             }

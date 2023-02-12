@@ -2,15 +2,34 @@ package daw.programacion.ruleta.logic;
 
 import daw.programacion.ruleta.sql.Connector;
 
-public class Panel {
-    public Panel() {
+public class oldPanel {
+    public static char[] hidden;
+    public static String phrases;
+
+    public oldPanel() {
         phrases = Connector.obtenerEnigmaNuevo();
         Connector.darBajaEigma(phrases);
     }
-    
-    public static char[] hidden;
 
-    public static String phrases;
+    public static void showConsonant(char[] hidden) {
+        System.out.println("Que consonante quieres revelar?");
+        String consonant = HEADERS.teclado.nextLine().toUpperCase();
+        if (consonant.equalsIgnoreCase("a") || consonant.equalsIgnoreCase("e") || consonant.equalsIgnoreCase("i") || consonant.equalsIgnoreCase("o") || consonant.equalsIgnoreCase("u")) {
+            System.err.println("Las vocales no se pueden revelar así");
+        }
+        else {
+            for (int i = 0; i < hidden.length; i++) {
+                if (phrases.charAt(i) == consonant.charAt(0)) {
+                    hidden[i] = phrases.charAt(i);
+                }
+            }
+        }
+
+        for (int i = 0; i < hidden.length; i++) {
+            System.out.print(hidden[i]);
+        }
+    }
+
     /**
      * El método esconde la frase escogida en la ronda y convierte todos los caracteres que tiene por asteríscos.
      *
@@ -41,23 +60,5 @@ public class Panel {
     // Método para dar pistas sobre la frase que tenemos en esa ronda
     public void showClue() {
         System.out.println("La frase son 3 sinónimos");
-    }
-
-    public static void showConsonant(char[] hidden) {
-        System.out.println("Que consonante quieres revelar?");
-        String consonant = HEADERS.teclado.nextLine().toUpperCase();
-        if (consonant.equalsIgnoreCase("a") || consonant.equalsIgnoreCase("e") || consonant.equalsIgnoreCase("i") || consonant.equalsIgnoreCase("o") || consonant.equalsIgnoreCase("u")) {
-            System.err.println("Las vocales no se pueden revelar así");
-        } else {
-            for (int i = 0; i < hidden.length; i++) {
-                if (phrases.charAt(i) == consonant.charAt(0)) {
-                    hidden[i] = phrases.charAt(i);
-                }
-            }
-        }
-
-        for (int i = 0; i < hidden.length; i++) {
-            System.out.print(hidden[i]);
-        }
     }
 }
