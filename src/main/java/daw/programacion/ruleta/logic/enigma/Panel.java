@@ -1,5 +1,6 @@
 package daw.programacion.ruleta.logic.enigma;
 
+
 import daw.programacion.ruleta.logic.Main;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,6 +9,7 @@ public class Panel {
 
     static Logger logger = LogManager.getLogger(Main.class);
     private final char[][] panelEnigma;
+    private final String enigma;
 
     /**
      * Un enigma está formado por un total de 12+14+14+12=52 casillas distribuidas de esa forma.
@@ -19,11 +21,10 @@ public class Panel {
      * @param enigma Acepta una frase en formato texto plano desde el SQL, se supone que ya compatibles.
      */
     public Panel(String enigma) {
+        this.enigma = enigma;
         String[] enigmaTokenizado = tokenizarFrase(enigma);
         panelEnigma = cuantosTokensPorLinea(enigmaTokenizado);
     }
-
-    // Reescribir el metodo de imprimir para que panelEnigma
 
     private String[] tokenizarFrase(String enigma) {
         if (enigma.length() > 52) {
@@ -33,6 +34,8 @@ public class Panel {
 
         return enigma.split(" ");
     }
+
+    // Reescribir el metodo de imprimir para que panelEnigma
 
     private char[][] cuantosTokensPorLinea(String[] fraseTokenizada) {
         getLogger().info("-- CALCULANDO POSICIONES ENIGMA EN PANEL --");
@@ -67,12 +70,16 @@ public class Panel {
                 getLogger().info("ROW: " + row + " COLUMNA: " + col + " CHAR: " + ' ' + " TOKEN: " + token);
             }
         }
-        toLog(panel);
         return panel;
     }
 
     static Logger getLogger() {
         return logger;
+    }
+
+    public static void main(String[] args) {
+        Panel panel = new Panel("Despiden al profe con una cadena humana de aplausos");
+        System.out.println(panel);
     }
 
     public void toLog(char[][] panelEnigma) {
@@ -82,12 +89,10 @@ public class Panel {
                 logger.info(linea[j]);
             }
         }
-
     }
 
-    public static void main(String[] args) {
-        Panel panel = new Panel("Despiden al profe con una cadena humana de aplausos");
-        System.out.println(panel);
+    public String getEnigma() {
+        return enigma;
     }
 
     public char[][] getPanelEnigma() {
@@ -104,9 +109,9 @@ public class Panel {
     public String toString() {
         StringBuilder lineaEnigma = new StringBuilder();
         for (char[] linea : panelEnigma) {
-            for (int j = 0; j < linea.length; j++) {
+            for (char c : linea) {
                 // Añadir a un string builder cada linea
-                lineaEnigma.append(linea[j]);
+                lineaEnigma.append(c);
             }
             lineaEnigma.append("\n");
         }
