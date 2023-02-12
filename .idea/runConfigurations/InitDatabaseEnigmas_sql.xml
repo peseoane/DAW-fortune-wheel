@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="InitDatabaseEnigmas.sql" type="DatabaseScript" editBeforeRun="true" nameIsGenerated="true">
+    <script-file value="$PROJECT_DIR$/src/main/java/daw/programacion/ruleta/sql/InitDatabaseEnigmas.sql" />
+    <script-mode>FILE</script-mode>
+    <data-source id="4edd17b2-7191-464a-9f33-63d1baa32ea6" />
+    <method v="2" />
+  </configuration>
+</component>
