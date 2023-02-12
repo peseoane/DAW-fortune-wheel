@@ -20,6 +20,7 @@ public class Driver {
     public String conector(String query) {
         Connection conn = null;
         StringBuilder enigma = new StringBuilder();
+        StringBuilder enigmaSano = new StringBuilder();
         try {
             conn = DriverManager.getConnection(DATABASE_URL);
             Statement stmt = conn.createStatement();
@@ -30,12 +31,14 @@ public class Driver {
             while (rs.next()) {
                 if (rs.getString("enigma") != null) {
                     enigma.append(rs.getString("enigma"));
+                    // Eliminar de enigma todos los símbolos de puntuación, tiles y miscelanea
+                    enigmaSano = sanitize(enigma);
                 }
             }
-            ResultSet rs2 = stmt.executeQuery(darBajaEigma(enigma.toString()));
-            logger.info("Conectado a SQLite");
+            query = darBajaEigma(enigma.toString());
+            int rowsUpdated = stmt.executeUpdate(query);
             logger.info(query);
-            logger.info(rs2.getString("enigma"));
+            logger.info("\nFilas actualizadas: " + rowsUpdated);
         } catch (SQLException e) {
             logger.error(e.getMessage());
         } finally {
@@ -47,7 +50,7 @@ public class Driver {
                 logger.error(ex.getMessage());
             }
         }
-        return enigma.toString();
+        return enigmaSano.toString();
     }
 
     private String obtenerEnigmaNuevo() {
@@ -57,6 +60,19 @@ public class Driver {
                 WHERE contestada = 0 
                 LIMIT 1;
                 """;
+    }
+
+    private StringBuilder sanitize(StringBuilder enigma) {
+        logger.info("Se va a sanear el input: " + enigma);
+        enigma = new StringBuilder(enigma.toString().toUpperCase());
+        enigma = new StringBuilder(enigma.toString().replaceAll("[ÁÀÂÄ]", "A"));
+        enigma = new StringBuilder(enigma.toString().replaceAll("[ÉÈÊË]", "E"));
+        enigma = new StringBuilder(enigma.toString().replaceAll("[ÍÌÎÏ]", "I"));
+        enigma = new StringBuilder(enigma.toString().replaceAll("[ÓÒÔÖ]", "O"));
+        enigma = new StringBuilder(enigma.toString().replaceAll("[ÚÙÛÜ]", "U"));
+        enigma = new StringBuilder(enigma.toString().replaceAll("[.,;:]", ""));
+        logger.info("Se ha sanado el input: " + enigma);
+        return enigma;
     }
 
     private String darBajaEigma(String enigma) {

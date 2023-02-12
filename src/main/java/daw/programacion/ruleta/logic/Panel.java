@@ -77,7 +77,6 @@ public class Panel {
 
     public static void main(String[] args) {
         Panel panel = new Panel("Despiden al profe con una cadena humana de aplausos");
-        System.out.println(panel);
     }
 
     public void toLog(char[][] panelEnigma) {
@@ -87,10 +86,6 @@ public class Panel {
                 logger.info(linea[j]);
             }
         }
-    }
-
-    public String getEnigma() {
-        return enigma;
     }
 
     public char[][] getPanelEnigma() {
@@ -103,16 +98,13 @@ public class Panel {
      *
      * @return Devuelve el panel enigma en formato texto plano.
      */
+
+    /*
     @Override
     public String toString() {
-        StringBuilder lineaEnigma = new StringBuilder();
-        for (char[] linea : panelEnigma) {
-            for (char c : linea) {
-                // Añadir a un string builder cada linea
-                lineaEnigma.append(c);
-            }
-            lineaEnigma.append("\n");
-        }
-        return lineaEnigma.toString();
+        return getEnigma();
+    }*/
+    public String getEnigma() {
+        return enigma;
     }
 }

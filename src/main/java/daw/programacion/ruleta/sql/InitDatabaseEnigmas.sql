@@ -17,6 +17,7 @@ CREATE TABLE jugadores
     victorias  INTEGER      NOT NULL DEFAULT 0
 );
 
+
 -- Añadir datos a la tabla enigmas, estos serán 30 refranes, la columna 0 tendrá la pista y la columna 1 tendrá el refrán en si.
 INSERT INTO enigmas (enigma)
 VALUES ('No hay mal que por bien no venga'),

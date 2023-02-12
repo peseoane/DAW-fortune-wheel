@@ -30,34 +30,12 @@ public class Player {
      * @param name  nombre de jugador
      * @param money sobrecarga, en caso de tener dinero especificarlo
      */
-    public Player(String name, int money, Panel panel) {
+    public Player(String name, int money) {
         this.name = name;
         this.money = money;
         this.force = (int) (Math.random() * (30 - 12 + 1) + 12);
-        this.panel = panel;
     }
 
-    /**
-     * Método para resolver panel
-     */
-    public void resolvePanel() {
-        mostrarPanel();
-        System.out.println("Introduzca la frase que cree que es correcta");
-        String frase = HEADERS.teclado.nextLine();
-        if (frase.equals(panel.getEnigma())) {
-            money += 100;
-            logger.info("El usuario ha acertado el enigma, se le han añadido 100€");
-        }
-        else {
-            money = 0;
-            logger.info("El usuario ha fallado el enigma, se le han quitado todos los puntos");
-        }
-    }
-
-    private void mostrarPanel() {
-        System.out.println("El panel es el siguiente:");
-        System.out.println(panel);
-    }
 
     public String getName() {
         return name;
