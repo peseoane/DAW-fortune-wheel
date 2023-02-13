@@ -1,13 +1,13 @@
-package daw.programacion.ruleta.gui;
+package mejorado.gui;
 
-import daw.programacion.ruleta.logic.HEADERS;
-import daw.programacion.ruleta.logic.Panel;
-import daw.programacion.ruleta.logic.Player;
-import daw.programacion.ruleta.logic.Wheel;
-import daw.programacion.ruleta.sql.Driver;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import mejorado.logic.HEADERS;
+import mejorado.logic.Panel;
+import mejorado.logic.Player;
+import mejorado.logic.Wheel;
+import mejorado.sql.Driver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

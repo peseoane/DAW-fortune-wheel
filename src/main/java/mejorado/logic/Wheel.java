@@ -1,4 +1,4 @@
-package daw.programacion.ruleta.logic;
+package mejorado.logic;
 
 public class Wheel {
 
@@ -8,8 +8,8 @@ public class Wheel {
     private final String ruletaTemplate = """
             |   %s  |    %s  |   %s  |
             """;
-    private String resultadoRuleta;
     private final Player player;
+    private String resultadoRuleta;
 
     public Wheel(Player player) {
         this.player = player;

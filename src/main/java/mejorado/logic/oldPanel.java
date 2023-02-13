@@ -1,4 +1,4 @@
-package daw.programacion.ruleta.logic;
+package mejorado.logic;
 
 public class oldPanel {
     public static char[] hidden;

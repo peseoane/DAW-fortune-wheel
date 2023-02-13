@@ -1,9 +1,9 @@
-package daw.programacion.ruleta.gui;
+package mejorado.gui;
 
-import daw.programacion.ruleta.logic.Panel;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import mejorado.logic.Panel;
 
 public class Tablero extends Pane {
 

@@ -1,6 +1,6 @@
-package daw.programacion.ruleta.sql;
+package mejorado.sql;
 
-import daw.programacion.ruleta.logic.Main;
+import mejorado.logic.Main;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
