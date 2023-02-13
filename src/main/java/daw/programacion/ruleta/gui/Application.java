@@ -1,23 +1,28 @@
-package daw.programacion.ruleta.logic;
+package daw.programacion.ruleta.gui;
 
+import daw.programacion.ruleta.logic.HEADERS;
+import daw.programacion.ruleta.logic.Panel;
+import daw.programacion.ruleta.logic.Player;
+import daw.programacion.ruleta.logic.Wheel;
 import daw.programacion.ruleta.sql.Driver;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Engine {
-
-    static Logger logger = LogManager.getLogger(Main.class);
-
+public class Application extends javafx.application.Application {
+    static Logger logger = LogManager.getLogger(Application.class);
     private final Driver driver;
     private final Player player;
     private final Wheel wheel;
     private final Panel panel;
 
-    public Engine() {
-        driver = new Driver();
-        player = registerPlayer();
-        panel = new Panel(driver.getEnigma());
-        wheel = new Wheel(player);
+    public Application(Driver driver, Player player, Wheel wheel, Panel panel) {
+        this.driver = driver;
+        this.player = registerPlayer();
+        this.wheel = new Wheel(player);
+        this.panel = new Panel(driver.getEnigma());
     }
 
     private Player registerPlayer() {
@@ -51,12 +56,24 @@ public class Engine {
         return new Player(name, money);
     }
 
-    public int start() {
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        primaryStage.setTitle("Ruleta");
         logger.info("El juego ha comenzado");
+
+
         intentarResolverPanel();
         wheel.girarRuleta(player);
         logger.info(player.getCasillaRuleta());
-        return 1;
+
+        StackPane root = new StackPane();
+        root.getChildren().add(new javafx.scene.control.Label("Aquí deberías agregar el panel"));
+        Scene scene = new Scene(root, 300, 250);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        Tablero tablero = new Tablero();
+        tablero.dibujarPanel(panel);
     }
 
     public boolean intentarResolverPanel() {
