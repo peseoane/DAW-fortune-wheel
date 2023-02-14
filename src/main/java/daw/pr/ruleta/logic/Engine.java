@@ -1,6 +1,6 @@
 package daw.pr.ruleta.logic;
 
-import daw.pr.ruleta.App;
+import daw.pr.ruleta.Main;
 import daw.pr.ruleta.SQL.Driver;
 import daw.pr.ruleta.struct.Headers;
 import daw.pr.ruleta.struct.Panel;
@@ -10,7 +10,7 @@ import org.apache.logging.log4j.Logger;
 
 public class Engine {
 
-    static Logger logger = LogManager.getLogger(App.class);
+    static Logger logger = LogManager.getLogger(Main.class);
 
     private final Driver driver;
     private final Player player;

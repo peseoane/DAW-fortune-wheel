@@ -1,8 +1,6 @@
 package daw.pr.ruleta.struct;
 
-
-import mejorado.logic.HEADERS;
-import mejorado.logic.Main;
+import daw.pr.ruleta.Main;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -58,10 +56,10 @@ public class Player {
 
     public void buyVocal() {
         System.out.println("Que vocal quiere comprar?");
-        String vocal = HEADERS.teclado.nextLine();
-        if (money >= HEADERS.CANTIDAD_VOCAL) {
+        String vocal = Headers.teclado.nextLine();
+        if (money >= Headers.CANTIDAD_VOCAL) {
             switch (vocal.charAt(0)) {
-                case 'a', 'e', 'i', 'o', 'u' -> money = money - HEADERS.CANTIDAD_VOCAL;
+                case 'a', 'e', 'i', 'o', 'u' -> money = money - Headers.CANTIDAD_VOCAL;
                 default -> logger.error("El usuario no ha introducido vocal, turno perdido");
             }
         }

@@ -1,6 +1,8 @@
 package daw.pr.ruleta.logic;
 
-public class Wheel {
+import daw.pr.ruleta.struct.Player;
+
+public class Ruleta {
 
     private final String[] ruleta = {"Quiebra", "x2", "100", "50", "100", "150", "Pierde turno", "150", "100", "50",
             "100", "50", "100", "200", "50", "150", "1/2", "50", "150", "100", "Comodín", "150", "100", "50", "100",
@@ -11,9 +13,10 @@ public class Wheel {
     private final Player player;
     private String resultadoRuleta;
 
-    public Wheel(Player player) {
+    public Ruleta(Player player) {
         this.player = player;
     }
+
 
     public String girarRuleta(Player player) {
         return ruleta(player);
