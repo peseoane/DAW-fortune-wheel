@@ -30,12 +30,6 @@
             <version>2.19.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>18.0.2</version>
-        </dependency>
-
     </dependencies>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -54,14 +48,6 @@
                 <version>0.8</version>
             </plugin>
 
-            <plugin>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.8</version>
-                <configuration>
-                    <mainClass>mejorado.gui.Application</mainClass>
-                </configuration>
-            </plugin>
         </plugins>
 
     </build>

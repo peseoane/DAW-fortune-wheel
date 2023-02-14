@@ -4,48 +4,44 @@ import daw.pr.ruleta.Main;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Panel {
+public class Enigma {
 
     static Logger logger = LogManager.getLogger(Main.class);
     private final char[][] panelEnigma;
-    private final String enigma;
 
     /**
      * Un enigma está formado por un total de 12+14+14+12=52 casillas distribuidas de esa forma.
      * Por tanto, hablamos de un array [[12],[14], [14], [12]] de casillas.
      * Por cada array, debemos comprobar que no se corten los tokens de las palabras al pasarlos,
-     * Dado que el panel no es un array perfecto, comprobamos que cada palabra del Panel cabe tanto en longitud global
+     * Dado que el panel no es un array perfecto, comprobamos que cada palabra del Enigma cabe tanto en longitud global
      * como por línea, si alguna palabra se corta, lanzamos excepción.
      *
      * @param enigma Acepta una frase en formato texto plano desde el SQL, se supone que ya compatibles.
      */
-    public Panel(String enigma) {
-        this.enigma = enigma;
+    public Enigma(String enigma) {
         String[] enigmaTokenizado = tokenizarFrase(enigma);
         panelEnigma = cuantosTokensPorLinea(enigmaTokenizado);
     }
 
     private String[] tokenizarFrase(String enigma) {
         if (enigma.length() > 52) {
-            getLogger().error("El enigma no puede tener más de 52 caracteres.");
+            logger.error("El enigma no puede tener más de 52 caracteres.");
             throw new IllegalArgumentException("El enigma no puede tener más de 52 caracteres.");
         }
 
         return enigma.split(" ");
     }
 
-    // Reescribir el metodo de imprimir para que panelEnigma
-
     private char[][] cuantosTokensPorLinea(String[] fraseTokenizada) {
-        getLogger().info("-- CALCULANDO POSICIONES ENIGMA EN PANEL --");
+        logger.info("-- CALCULANDO POSICIONES ENIGMA EN PANEL --");
 
-        // Estamos usando el panel de la tele, no es rectangular perfecto.
+        // Nuestro panel es de la televisión no es un rectángulo perfecto!
         char[][] panel = new char[4][14];
-
-        panel[0][0] = '*';
-        panel[3][0] = '*';
-        panel[0][13] = '*';
-        panel[3][13] = '*';
+        for (int i = 0; i < panel.length; i++) {
+            for (int j = 0; j < panel[0].length; j++) {
+                panel[i][j] = '*';
+            }
+        }
 
         int end = 13;
         int row = 0;
@@ -60,52 +56,42 @@ public class Panel {
             // Añadimos por cada n letra al array
             for (char c : token.toCharArray()) {
                 panel[row][col++] = c;
-                getLogger().info("ROW: " + row + " COLUMNA: " + col + " CHAR: " + c + " TOKEN: " + token);
+                logger.info("ROW: " + row + " COLUMNA: " + col + " CHAR: " + c + " TOKEN: " + token);
             }
 
             // Añadir un espacio entre palabras si no es la columna final
             if (col < end) {
                 panel[row][col++] = ' ';
-                getLogger().info("ROW: " + row + " COLUMNA: " + col + " CHAR: " + ' ' + " TOKEN: " + token);
+                logger.info("ROW: " + row + " COLUMNA: " + col + " CHAR: " + ' ' + " TOKEN: " + token);
             }
         }
         return panel;
     }
 
-    static Logger getLogger() {
-        return logger;
-    }
-
     public static void main(String[] args) {
-        mejorado.logic.Panel panel = new mejorado.logic.Panel("Despiden al profe con una cadena humana de aplausos");
+        Enigma enigma = new Enigma("Hola que tal");
+        logger.info(enigma.getPanelEnigma());
     }
 
-    public void toLog(char[][] panelEnigma) {
+    public String getPanelEnigma() {
+        StringBuilder sb = new StringBuilder();
         for (char[] linea : panelEnigma) {
-            for (int j = 0; j < panelEnigma.length; j++) {
+            sb.append("\n");
+            for (int j = 0; j < panelEnigma[0].length; j++) {
                 // Añadir a un string builder cada linea
-                logger.info(linea[j]);
+                sb.append(linea[j]);
             }
         }
+
+        return sb.toString();
     }
 
-    public char[][] getPanelEnigma() {
-        logger.info("Se ha solicitado el panel enigma, PASANDO POR REFERENCIA");
+    public char[][] getPanel() {
         return panelEnigma;
     }
 
-    /**
-     * Imprime el panel enigma en formato texto plano y no su referencia en memoria.
-     *
-     * @return Devuelve el panel enigma en formato texto plano.
-     */
-
-    /*
-    @Override
-    public String toString() {
-        return getEnigma();
-    }*/
     public String getEnigma() {
-        return enigma;
+        return getPanelEnigma();
     }
+
 }

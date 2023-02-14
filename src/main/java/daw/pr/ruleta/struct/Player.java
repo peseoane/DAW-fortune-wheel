@@ -56,10 +56,10 @@ public class Player {
 
     public void buyVocal() {
         System.out.println("Que vocal quiere comprar?");
-        String vocal = Headers.teclado.nextLine();
-        if (money >= Headers.CANTIDAD_VOCAL) {
+        String vocal = definitions.teclado.nextLine();
+        if (money >= definitions.CANTIDAD_VOCAL) {
             switch (vocal.charAt(0)) {
-                case 'a', 'e', 'i', 'o', 'u' -> money = money - Headers.CANTIDAD_VOCAL;
+                case 'a', 'e', 'i', 'o', 'u' -> money = money - definitions.CANTIDAD_VOCAL;
                 default -> logger.error("El usuario no ha introducido vocal, turno perdido");
             }
         }
