@@ -1,9 +1,9 @@
-package mejorado.logic;
+package daw.pr.ruleta.struct;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
-public interface HEADERS {
+public interface Headers {
     int CANTIDAD_VOCAL = 50;
     Scanner teclado = new Scanner(System.in, StandardCharsets.ISO_8859_1);
     String[] ruleta = {

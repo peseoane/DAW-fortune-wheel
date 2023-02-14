@@ -1,5 +1,7 @@
-package mejorado.logic;
+package daw.pr.ruleta.struct;
 
+
+import mejorado.logic.Main;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -76,7 +78,7 @@ public class Panel {
     }
 
     public static void main(String[] args) {
-        Panel panel = new Panel("Despiden al profe con una cadena humana de aplausos");
+        mejorado.logic.Panel panel = new mejorado.logic.Panel("Despiden al profe con una cadena humana de aplausos");
     }
 
     public void toLog(char[][] panelEnigma) {

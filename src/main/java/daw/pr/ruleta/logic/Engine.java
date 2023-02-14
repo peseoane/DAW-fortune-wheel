@@ -1,12 +1,12 @@
-package refactor.logic;
+package daw.pr.ruleta.logic;
 
+import daw.pr.ruleta.App;
+import daw.pr.ruleta.SQL.Driver;
+import daw.pr.ruleta.struct.Headers;
+import daw.pr.ruleta.struct.Panel;
+import daw.pr.ruleta.struct.Player;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import refactor.App;
-import refactor.SQL.Driver;
-import refactor.struct.Headers;
-import refactor.struct.Panel;
-import refactor.struct.Player;
 
 public class Engine {
 
@@ -14,14 +14,12 @@ public class Engine {
 
     private final Driver driver;
     private final Player player;
-    private final Wheel wheel;
     private final Panel panel;
 
     public Engine() {
         driver = new Driver();
         player = registerPlayer();
         panel = new Panel(driver.getEnigma());
-        wheel = new Wheel(player);
     }
 
     private Player registerPlayer() {
@@ -58,7 +56,6 @@ public class Engine {
     public int start() {
         logger.info("El juego ha comenzado");
         intentarResolverPanel();
-        wheel.girarRuleta(player);
         logger.info(player.getCasillaRuleta());
         return 1;
     }

@@ -1,4 +1,4 @@
-package refactor.struct;
+package daw.pr.ruleta.struct;
 
 
 import mejorado.logic.HEADERS;

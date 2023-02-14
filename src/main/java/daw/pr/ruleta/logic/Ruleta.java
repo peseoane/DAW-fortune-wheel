@@ -1,4 +1,4 @@
-package mejorado.logic;
+package daw.pr.ruleta.logic;
 
 public class Wheel {
 

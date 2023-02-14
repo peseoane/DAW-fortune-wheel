@@ -1,4 +1,4 @@
-package mejorado.sql;
+package daw.pr.ruleta.SQL;
 
 import mejorado.logic.Main;
 import org.apache.logging.log4j.LogManager;
