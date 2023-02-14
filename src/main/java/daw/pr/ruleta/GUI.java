@@ -8,7 +8,7 @@ import java.awt.*;
 public class GUI {
 
     public static void main(String[] args) {
-        Enigma mi = new Enigma("Hola que tal");
+        Enigma mi = new Enigma("esto es por vosotros siui");
         char[][] panelArray = mi.getPanel();
 
         JFrame frame = new JFrame("Panel");
@@ -37,5 +37,9 @@ public class GUI {
 
         frame.pack();
         frame.setVisible(true);
+        int i = 0;
+        while (true) {
+            System.out.println("Hola" + i);
+        }
     }
 }
