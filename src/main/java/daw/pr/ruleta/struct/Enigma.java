@@ -1,6 +1,7 @@
 package daw.pr.ruleta.struct;
 
 import daw.pr.ruleta.Main;
+import daw.pr.ruleta.SQL.SQLDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,8 +19,9 @@ public class Enigma {
      *
      * @param enigma Acepta una frase en formato texto plano desde el SQL, se supone que ya compatibles.
      */
-    public Enigma(String enigma) {
-        String[] enigmaTokenizado = tokenizarFrase(enigma);
+    public Enigma(SQLDriver sql) {
+        String[] enigmaTokenizado = tokenizarFrase(sql.getEnigma());
+        String pista = sql.getPista();
         panelEnigma = cuantosTokensPorLinea(enigmaTokenizado);
     }
 
@@ -65,16 +67,19 @@ public class Enigma {
             // Añadir un espacio entre palabras si no es la columna final
             if (col < end) {
                 logger.info("entrando en 3");
-                    panel[row][col++]= '*';
-                    logger.info("SPACE ROW: " + row + " COLUMNA: " + col + " CHAR: " + ' ' + " TOKEN: " + token);
+                panel[row][col++] = '*';
+                logger.info("SPACE ROW: " + row + " COLUMNA: " + col + " CHAR: " + ' ' + " TOKEN: " + token);
             }
         }
         return panel;
     }
 
-    public static void main(String[] args) {
-        Enigma enigma = new Enigma("Hola que tal");
-        logger.info(enigma.getPanelEnigma());
+    public char[][] getPanel() {
+        return panelEnigma;
+    }
+
+    public String getEnigma() {
+        return getPanelEnigma();
     }
 
     public String getPanelEnigma() {
@@ -88,14 +93,6 @@ public class Enigma {
         }
 
         return sb.toString();
-    }
-
-    public char[][] getPanel() {
-        return panelEnigma;
-    }
-
-    public String getEnigma() {
-        return getPanelEnigma();
     }
 
 }

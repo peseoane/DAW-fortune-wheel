@@ -13,21 +13,18 @@ public class SQLDriver {
     String pista;
 
     public SQLDriver() {
-        enigma = getEnigma();
+        enigma = getEnigma(); // Patch! También lo anula por acomplamiento...
         pista = getPista();
     }
 
     public String getEnigma() {
-        return ejecutarQuery(obtenerEnigmaNuevo());
+        String enigma = ejecutarQuery(obtenerEnigmaNuevo());
+        ejecutarActualizacion(darDeBaja(enigma));
+        return enigma;
     }
 
     public String getPista() {
         return ejecutarQuery(obtenerPista(this.enigma));
-    }
-
-    public String anularEnigma(String enigma){
-        ejecutarActualizacion(anularEnigma(this.enigma));
-        return enigma;
     }
 
     private String ejecutarQuery(String query) {
@@ -35,16 +32,6 @@ public class SQLDriver {
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             return rs.getString(1);
-        } catch (SQLException e) {
-            logger.error(e.getMessage());
-        }
-        return null;
-    }
-
-    private String ejecutarActualizacion(String query) {
-        try (Connection conn = DriverManager.getConnection(DATABASE_URL);
-             Statement stmt = conn.createStatement()) {
-            stmt.executeUpdate(query);
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }
@@ -60,20 +47,30 @@ public class SQLDriver {
                 """;
     }
 
+    private String ejecutarActualizacion(String query) {
+        try (Connection conn = DriverManager.getConnection(DATABASE_URL);
+             Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate(query);
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
+        return null;
+    }
+
     // get the pista from a enigma using SQL
 
-    private String obtenerPista(String enigma){
+    private String darDeBaja(String enigma) {
         return """
-                SELECT pista 
-                FROM enigmas 
+                UPDATE enigmas 
+                SET contestada = 1 
                 WHERE enigma = "%s";
                 """.formatted(enigma);
     }
 
-    private String darDeBaja(String enigma){
+    private String obtenerPista(String enigma) {
         return """
-                UPDATE enigmas 
-                SET contestada = 1 
+                SELECT pista 
+                FROM enigmas 
                 WHERE enigma = "%s";
                 """.formatted(enigma);
     }

@@ -11,24 +11,18 @@ import org.apache.logging.log4j.Logger;
 public class Engine {
 
     static Logger logger = LogManager.getLogger(Main.class);
-    private String enigmaFrase;
-
-    private Player player;
-    private SQLDriver sql = new SQLDriver();
-    private String pista;
-    private char[][] enigma;
-    private Enigma enigma = New Enigma;
+    private final SQLDriver sql = new SQLDriver();
+    private final Enigma enigma = new Enigma(sql);
+    private final String frase = enigma.getEnigma();
+    private final String pista;
+    private final char[][] enigmaPanel;
+    private Player player = new Player("test", 0);
+    private final Ruleta ruleta = new Ruleta(player);
 
     public Engine() {
         this.player = registerPlayer();
-        this.enigmaFrase = sql.getEnigma();
         this.pista = sql.getPista();
-        this.enigma = new Enigma(this.enigmaFrase).getPanelEnigma();
-
-    }
-
-    public String getEnigma() {
-        return enigma;
+        this.enigmaPanel = enigma.getPanel();
     }
 
     private Player registerPlayer() {
@@ -60,6 +54,10 @@ public class Engine {
         definitions.teclado.nextLine();
         logger.info("Nombre = " + name + " Dinero " + money);
         return new Player(name, money);
+    }
+
+    public char[][] getEnigmaPanel() {
+        return enigmaPanel;
     }
 
     public int start() {
@@ -94,7 +92,7 @@ public class Engine {
     @SuppressWarnings("GrazieInspection")
     public void Premio() {
         String premio = player.getCasillaRuleta();
-        
+
         int premioInt = 0;
         int comodin = 0;
         try {
@@ -124,7 +122,8 @@ public class Engine {
                 if (comodin > 0) {
                     continuar = true;
                     comodin--;
-                } else {
+                }
+                else {
                     continuar = false;
                 }
             }
