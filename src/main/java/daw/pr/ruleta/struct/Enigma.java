@@ -46,23 +46,27 @@ public class Enigma {
         int end = 13;
         int row = 0;
         int col = 1;
+        boolean flag = false;
         for (String token : fraseTokenizada) {
             // Dado que el panel no es un rectángulo perfecto hay que ver si dejar el asterisco o no de las esquinas
             if (token.length() > end - col) {
+                logger.info("entrando en 1");
                 row++;
                 col = (row == 3) ? 1 : 0;
             }
 
             // Añadimos por cada n letra al array
             for (char c : token.toCharArray()) {
+                logger.info("entrando en 2");
                 panel[row][col++] = c;
                 logger.info("ROW: " + row + " COLUMNA: " + col + " CHAR: " + c + " TOKEN: " + token);
             }
 
             // Añadir un espacio entre palabras si no es la columna final
             if (col < end) {
-                panel[row][col++] = ' ';
-                logger.info("ROW: " + row + " COLUMNA: " + col + " CHAR: " + ' ' + " TOKEN: " + token);
+                logger.info("entrando en 3");
+                    panel[row][col++]= '*';
+                    logger.info("SPACE ROW: " + row + " COLUMNA: " + col + " CHAR: " + ' ' + " TOKEN: " + token);
             }
         }
         return panel;
