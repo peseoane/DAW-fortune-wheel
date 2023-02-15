@@ -1,7 +1,7 @@
 package daw.pr.ruleta.logic;
 
 import daw.pr.ruleta.Main;
-import daw.pr.ruleta.SQL.Driver;
+import daw.pr.ruleta.SQL.SQLDriver;
 import daw.pr.ruleta.struct.Enigma;
 import daw.pr.ruleta.struct.Player;
 import daw.pr.ruleta.struct.definitions;
@@ -12,14 +12,14 @@ public class Engine {
 
     static Logger logger = LogManager.getLogger(Main.class);
 
-    private final Driver driver;
+    private final SQLDriver SQLDriver;
     private final Player player;
     private final Enigma enigma;
 
     public Engine() {
-        driver = new Driver();
+        SQLDriver = new SQLDriver();
         player = registerPlayer();
-        enigma = new Enigma(driver.getEnigma());
+        enigma = new Enigma(SQLDriver.getEnigma());
     }
 
     private Player registerPlayer() {

@@ -6,14 +6,11 @@ import org.apache.logging.log4j.Logger;
 
 public class Player {
     static Logger logger = LogManager.getLogger(Main.class);
-
     private final int force;
     String casillaRuleta;
     private String name;
     private int money;
     private boolean turn;
-
-
     /**
      * Constructor cuando un jugador mantiene dinero de otra ronda.
      *
@@ -24,6 +21,22 @@ public class Player {
         this.name = name;
         this.money = money;
         this.force = (int) (Math.random() * (30 - 12 + 1) + 12);
+    }
+
+    public boolean isTurn() {
+        return turn;
+    }
+
+    public void setTurn(boolean turn) {
+        this.turn = turn;
+    }
+
+    public static Logger getLogger() {
+        return logger;
+    }
+
+    public static void setLogger(Logger logger) {
+        Player.logger = logger;
     }
 
     public String getCasillaRuleta() {
