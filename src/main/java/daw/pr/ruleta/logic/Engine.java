@@ -11,15 +11,24 @@ import org.apache.logging.log4j.Logger;
 public class Engine {
 
     static Logger logger = LogManager.getLogger(Main.class);
+    private String enigmaFrase;
 
-    private final SQLDriver SQLDriver;
-    private final Player player;
-    private final Enigma enigma;
+    private Player player;
+    private SQLDriver sql = new SQLDriver();
+    private String pista;
+    private char[][] enigma;
+    private Enigma enigma = New Enigma;
 
     public Engine() {
-        SQLDriver = new SQLDriver();
-        player = registerPlayer();
-        enigma = new Enigma(SQLDriver.getEnigma());
+        this.player = registerPlayer();
+        this.enigmaFrase = sql.getEnigma();
+        this.pista = sql.getPista();
+        this.enigma = new Enigma(this.enigmaFrase).getPanelEnigma();
+
+    }
+
+    public String getEnigma() {
+        return enigma;
     }
 
     private Player registerPlayer() {

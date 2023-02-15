@@ -17,15 +17,15 @@ public class SQLDriver {
         pista = getPista();
     }
 
-    private String getEnigma() {
+    public String getEnigma() {
         return ejecutarQuery(obtenerEnigmaNuevo());
     }
 
-    private String getPista() {
+    public String getPista() {
         return ejecutarQuery(obtenerPista(this.enigma));
     }
 
-    private String anularEnigma(String enigma){
+    public String anularEnigma(String enigma){
         ejecutarActualizacion(anularEnigma(this.enigma));
         return enigma;
     }

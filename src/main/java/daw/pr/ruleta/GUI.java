@@ -1,5 +1,6 @@
 package daw.pr.ruleta;
 
+import daw.pr.ruleta.logic.Engine;
 import daw.pr.ruleta.struct.Enigma;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,10 +15,10 @@ public class GUI {
     public static void main(String[] args) {
         // Create a new Enigma object, 
         // with the phrase "A QUIEN MADRUGA DIOS LE AYUDA"
-        Enigma mi = new Enigma("A QUIEN MADRUGA DIOS LE AYUDA");
-        // Get the panel array from the Enigma object
-        char[][] panelArray = mi.getPanel();
+        Engine engine = new Engine();
 
+        // Get the panel array from the Enigma object
+        char[][] panelArray = engine.getEnigma().getPanel();
         // Create a new JFrame
         JFrame frame = new JFrame("Panel");
 
