@@ -85,11 +85,13 @@ public class Engine {
 
     /**
      * El método premio se encarga de asignar al jugador su premio en función de la casilla en la que haya caído.
-     * Si el jugador cae en la casilla de quiebra, pierde all su dinero. Si cae en la casilla de x2, duplica su dinero.
-     * Si cae en la casilla de 1/2, da la mitad de su dinero a la banca.
-     * Si cae en la casilla de pierde turno y el jugador no tiene un comodín pierde su turno, si tiene un comodín no
-     * pierde su turno y se le quita ese comodín al jugador. Si cae en la casilla de comodín, se le añade un comodín.
+     * Si cae en una casilla con un número se le añade al jugador el dinero. Si el jugador cae en la casilla de
+     * quiebra, pierde all su dinero. En caso de que caiga en la casilla de x2, duplica su dinero. Si cae en la
+     * casilla de 1/2, da la mitad de su dinero a la banca. Al caer en la casilla de "pierde turno" y si el jugador
+     * no tiene un comodín pierde su turno, si tiene un comodín no se pierde su turno y se le quita ese comodín al
+     * jugador. Si cae en la casilla de comodín, se le añade un comodín.
      */
+    @SuppressWarnings("GrazieInspection")
     public void Premio() {
         String premio = player.getCasillaRuleta();
         
