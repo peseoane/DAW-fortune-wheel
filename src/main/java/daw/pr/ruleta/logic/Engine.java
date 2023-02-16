@@ -1,7 +1,7 @@
 package daw.pr.ruleta.logic;
 
-import daw.pr.ruleta.SQL.SQLDriver;
 import daw.pr.ruleta.Main;
+import daw.pr.ruleta.SQL.SQLDriver;
 import daw.pr.ruleta.struct.Enigma;
 import daw.pr.ruleta.struct.Player;
 import daw.pr.ruleta.struct.definitions;
@@ -16,8 +16,10 @@ public class Engine {
     private final String frase = enigma.getEnigma();
     private final String pista;
     private final char[][] enigmaPanel;
-    private Player player = new Player("test", 0);
+    private final Player player = new Player("test", 0);
     private final Ruleta ruleta = new Ruleta(player);
+
+    private final int turnPlayer = 0;
 
     public Engine() {
         Player[] jugadores = new Player[4];
@@ -29,9 +31,9 @@ public class Engine {
         return pista;
     }
 
-    public String getJugadorName(){
+    public String getJugadorName() {
         return player.getName();
-    };
+    }
 
     private Player registerPlayer() {
         String name = null;
@@ -109,6 +111,7 @@ public class Engine {
             logger.info("Premio especial");
         }
 
+
         if (premioInt != 0) {
             player.setMoney(player.getMoney() + premioInt);
         }
@@ -137,6 +140,26 @@ public class Engine {
             }
         }
 
+    }
 
+    public void showConsonant() {
+        System.out.println("Que consonante quieres revelar?");
+        String consonant = definitions.teclado.nextLine();
+        if (consonant.equalsIgnoreCase("a") || consonant.equalsIgnoreCase("e") || consonant.equalsIgnoreCase("i") || consonant.equalsIgnoreCase("o") || consonant.equalsIgnoreCase("u")) {
+            System.err.println("Las vocales no se pueden revelar así");
+        }
+        else {
+            char[] hidden = frase.toCharArray();
+            char[] frase = enigma.getEnigma().toCharArray();
+            for (int i = 0; i < frase.length; i++) {
+                if (frase[i] == consonant.charAt(0)) {
+                    hidden[i] = frase[i];
+                }
+            }
+
+            for (int i = 0; i < hidden.length; i++) {
+                System.out.print(hidden[i]);
+            }
+        }
     }
 }

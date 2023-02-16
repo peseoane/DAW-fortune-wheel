@@ -10,9 +10,7 @@ public class Player {
     String casillaRuleta;
     private String name;
     private int money;
-    private int turn;
-
-    private int numPlayer = 0;
+    private boolean turn;
     /**
      * Constructor cuando un jugador mantiene dinero de otra ronda.
      *
@@ -25,11 +23,11 @@ public class Player {
         this.force = (int) (Math.random() * (30 - 12 + 1) + 12);
     }
 
-    public int getTurn() {
+    public boolean isTurn() {
         return turn;
     }
 
-    public void setTurn(int turn) {
+    public void setTurn(boolean turn) {
         this.turn = turn;
     }
 
