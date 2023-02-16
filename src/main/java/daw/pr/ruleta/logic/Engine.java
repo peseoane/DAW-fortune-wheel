@@ -25,6 +25,14 @@ public class Engine {
         this.enigmaPanel = enigma.getPanel();
     }
 
+    public String getPista() {
+        return pista;
+    }
+
+    public String getJugadorName(){
+        return player.getName();
+    };
+
     private Player registerPlayer() {
         String name = null;
         int money = 0;

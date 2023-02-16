@@ -27,7 +27,7 @@ public class App {
         playerInfoPanel.setLayout(new BoxLayout(playerInfoPanel, BoxLayout.X_AXIS));
         // Add a label for the player name.
         playerInfoPanel.add(new JLabel("JUGADOR: "));
-        playerInfoPanel.add(new JLabel("aquíLeyeraVariableJugador")); // Replace "aquíLeyeraVariableJugador" with the
+        playerInfoPanel.add(new JLabel(engine.getJugadorName())); // Replace "aquíLeyeraVariableJugador" with the
         // actual variable that stores the player name.
         // Add a label for the player's money.
         playerInfoPanel.add(new JLabel(" | DINERO: "));
@@ -43,7 +43,7 @@ public class App {
             // For each column...
             for (int j = 0; j < 14; j++) {
                 // Create a new button with the character at that position.
-                buttons[i][j] = new JButton(String.valueOf(panelArray[i][j]));
+                buttons[i][j] = new JButton(String.valueOf(panelArray[i][j]).toUpperCase());
                 // If the character is a *...
                 if (panelArray[i][j] == '*') {
                     // Set the background to blue.
@@ -78,6 +78,9 @@ public class App {
         // Add a label for the control buttons.
         controlButtonPanel.add(new JLabel("ETIQUETA: "));
         controlButtonPanel.add(new JLabel("leerString")); // Replace "leerString" with the actual function call that
+        // read pista and print in a JLabel
+        controlButtonPanel.add(new JLabel(engine.getPista()));
+
         // returns the string to be displayed in the label.
         // Add the "Comprar Vocal" button.
         JButton buyVowelButton = new JButton("Comprar Vocal");
