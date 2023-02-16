@@ -1,8 +1,8 @@
+daw\pr\ruleta\GUI\App.class
 daw\pr\ruleta\struct\definitions.class
 daw\pr\ruleta\struct\Player.class
+daw\pr\ruleta\SQL\SQLDriver.class
 daw\pr\ruleta\struct\Enigma.class
-daw\pr\ruleta\GUI.class
-daw\pr\ruleta\SQL\Driver.class
 daw\pr\ruleta\logic\Engine.class
 daw\pr\ruleta\Main.class
 daw\pr\ruleta\logic\Ruleta.class

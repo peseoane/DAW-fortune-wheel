@@ -1,7 +1,7 @@
 package daw.pr.ruleta.logic;
 
-import daw.pr.ruleta.Main;
 import daw.pr.ruleta.SQL.SQLDriver;
+import daw.pr.ruleta.Main;
 import daw.pr.ruleta.struct.Enigma;
 import daw.pr.ruleta.struct.Player;
 import daw.pr.ruleta.struct.definitions;
@@ -20,7 +20,7 @@ public class Engine {
     private final Ruleta ruleta = new Ruleta(player);
 
     public Engine() {
-        this.player = registerPlayer();
+        Player[] jugadores = new Player[4];
         this.pista = sql.getPista();
         this.enigmaPanel = enigma.getPanel();
     }
