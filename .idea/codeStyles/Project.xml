@@ -35,6 +35,7 @@
       </indentOptions>
     </codeStyleSettings>
     <codeStyleSettings language="JAVA">
+      <option name="BLOCK_COMMENT_ADD_SPACE" value="true" />
       <option name="ELSE_ON_NEW_LINE" value="true" />
       <option name="ALIGN_MULTILINE_PARAMETERS_IN_CALLS" value="true" />
       <option name="ALIGN_MULTILINE_THROWS_LIST" value="true" />
@@ -57,10 +58,6 @@
           <group>
             <type>OVERRIDDEN_METHODS</type>
             <order>BY_NAME</order>
-          </group>
-          <group>
-            <type>DEPENDENT_METHODS</type>
-            <order>BREADTH_FIRST</order>
           </group>
         </groups>
       </arrangement>
