@@ -8,6 +8,7 @@ CREATE TABLE enigmas
     pista      VARCHAR(12) NOT NULL DEFAULT 'REFRÁN'
 );
 
+
 DROP TABLE jugadores;
 CREATE TABLE jugadores
 (

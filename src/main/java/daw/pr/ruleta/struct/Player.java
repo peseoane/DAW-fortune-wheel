@@ -6,11 +6,11 @@ import org.apache.logging.log4j.Logger;
 
 public class Player {
     static Logger logger = LogManager.getLogger(Main.class);
-    private final int force;
     String casillaRuleta;
     private String name;
     private int money;
     private boolean turn;
+
     /**
      * Constructor cuando un jugador mantiene dinero de otra ronda.
      *
@@ -23,20 +23,20 @@ public class Player {
         this.force = (int) (Math.random() * (30 - 12 + 1) + 12);
     }
 
-    public boolean isTurn() {
-        return turn;
-    }
-
-    public void setTurn(boolean turn) {
-        this.turn = turn;
-    }
-
     public static Logger getLogger() {
         return logger;
     }
 
     public static void setLogger(Logger logger) {
         Player.logger = logger;
+    }
+
+    public boolean isTurn() {
+        return turn;
+    }
+
+    public void setTurn(boolean turn) {
+        this.turn = turn;
     }
 
     public String getCasillaRuleta() {
@@ -63,18 +63,22 @@ public class Player {
         this.money = money;
     }
 
-    public int getForce() {
-        return force;
-    }
-
-    public void buyVocal() {
+    public char buyVocal() {
+        char vocalSeleccionada = ' ';
         System.out.println("Que vocal quiere comprar?");
         String vocal = definitions.teclado.nextLine();
         if (money >= definitions.CANTIDAD_VOCAL) {
             switch (vocal.charAt(0)) {
-                case 'a', 'e', 'i', 'o', 'u' -> money = money - definitions.CANTIDAD_VOCAL;
-                default -> logger.error("El usuario no ha introducido vocal, turno perdido");
+                case 'a', 'e', 'i', 'o', 'u' -> {
+                    vocalSeleccionada = vocal.charAt(0);
+                    money = money - definitions.CANTIDAD_VOCAL;
+                }
+                default -> {
+                    logger.error("El usuario no ha introducido vocal, turno perdido");
+                    turn = false;
+                }
             }
         }
+        return vocalSeleccionada;
     }
 }
