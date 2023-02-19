@@ -35,6 +35,8 @@ public class Engine {
         return player.getName();
     }
 
+    // Método para seleccionar una posicin del arrayList
+
     private Player registerPlayer() {
         String name = null;
         int money = 0;
@@ -101,7 +103,7 @@ public class Engine {
      */
     @SuppressWarnings("GrazieInspection")
     public void Premio() {
-        String premio = player.getCasillaRuleta();
+        String premio = ruleta.girarRuleta();
 
         int premioInt = 0;
         int comodin = 0;
@@ -149,16 +151,11 @@ public class Engine {
             System.err.println("Las vocales no se pueden revelar así");
         }
         else {
-            char[] hidden = frase.toCharArray();
-            char[] frase = enigma.getEnigma().toCharArray();
-            for (int i = 0; i < frase.length; i++) {
-                if (frase[i] == consonant.charAt(0)) {
-                    hidden[i] = frase[i];
+            for (int i = 0; i < enigmaProgreso.length; i++) {
+                if (enigmaPanel[i].equals(consonant.charAt(0))) {
+                    enigmaProgreso[i] = enigmaPanel[i];
+                    logger.info("La letra " + consonant + " se ha revelado");
                 }
-            }
-
-            for (int i = 0; i < hidden.length; i++) {
-                System.out.print(hidden[i]);
             }
         }
     }

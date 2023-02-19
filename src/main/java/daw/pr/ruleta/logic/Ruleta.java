@@ -1,7 +1,5 @@
 package daw.pr.ruleta.logic;
 
-import daw.pr.ruleta.struct.Player;
-
 public class Ruleta {
 
     private final String[] ruleta = {"Quiebra", "x2", "100", "50", "100", "150", "Pierde turno", "150", "100", "50",
@@ -10,8 +8,7 @@ public class Ruleta {
     private final String ruletaTemplate = """
             |   %s  |    %s  |   %s  |
             """;
-    private final Player player;
-    private String resultadoRuleta;
+    private final String resultadoRuleta;
 
     public Ruleta(Player player) {
         this.player = player;
@@ -77,26 +74,5 @@ public class Ruleta {
             }
         }
         return activeRuleta.toString();
-    }
-
-    /*
-    private int calcularFuerza(int force) {
-        // Aceptar force como seed de un generador de aleatorios entre 40 y 10
-        int max = 40;
-        int min = 12;
-        int random = (int) (Math.random() * (max - min + 1) + min);
-        return random;
-    }*/
-
-    private void wheelArrow(String StringLength) {
-        for (int j = 0; j < StringLength.length(); j++) {
-            if (j == StringLength.length() / 2) {
-                System.out.print("↓");
-            }
-            else {
-                System.out.print("_");
-            }
-        }
-        System.out.println();
     }
 }
