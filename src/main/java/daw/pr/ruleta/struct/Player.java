@@ -10,6 +10,7 @@ public class Player {
     private String name;
     private int money;
     private boolean turn;
+    private int comodin;
 
     /**
      * Constructor cuando un jugador mantiene dinero de otra ronda.
@@ -20,6 +21,7 @@ public class Player {
     public Player(String name, int money) {
         this.name = name;
         this.money = money;
+        this.comodin = 0;
     }
 
     public static Logger getLogger() {
@@ -28,6 +30,14 @@ public class Player {
 
     public static void setLogger(Logger logger) {
         Player.logger = logger;
+    }
+
+    public int getComodin() {
+        return comodin;
+    }
+
+    public void setComodin(int comodin) {
+        this.comodin = comodin;
     }
 
     public boolean isTurn() {

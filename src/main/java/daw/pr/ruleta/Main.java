@@ -13,8 +13,10 @@ public class Main {
 
         Engine engine = new Engine();
 
-        
-        engine.getNumeroJugadores();
+        int numJugadores = engine.getNumeroJugadores();
+
+        // generate random number between 0 and numJugadores
+        int n = (int) (Math.random() * (numJugadores + 1));
 
     }
 }

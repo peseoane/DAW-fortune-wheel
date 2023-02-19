@@ -8,7 +8,7 @@ import daw.pr.ruleta.struct.definitions;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
+import static java.lang.Integer.parseInt;
 
 public class Engine {
 
@@ -17,12 +17,14 @@ public class Engine {
     private final Player player = new Player("test", 0);
     private final int turnPlayer = 0;
     private final char[][] enigmaProgreso = new char[4][14];
-    ArrayList<Player> players = new ArrayList<Player>();
+
+    private Player[] players;
     private String pista;
     private Ruleta ruleta;
     private char[][] enigmaPanel = new char[4][14];
     private String pistaActual;
     private String enigmaFrase;
+
 
     public Engine() {
         int numeroJugadores = getNumeroJugadores();
@@ -45,22 +47,115 @@ public class Engine {
         nuevoEnigmaYPista();
     }
 
-    public void mostrarMenu() {
-        do {
-            System.out.println("1. Generar partida");
-            System.out.println("2. Resolver");
-            if (player.getMoney() > 50) {
-                System.out.println("3. Comprar vocal");
-            }
-            else {
-                System.out.println("3. Comprar vocal (No tienes suficiente dinero)");
-            }
-            System.out.println("4. Salir");
-        } while ()
+    public void mostrarMenu(Player player, int premio) {
+
     }
 
-    public void generarPartida(int jugador) {
+    public void generarPartida(int posicionPlayer) {
+        System.out.println("Turno de " + players[posicionPlayer].getName());
+        boolean continuar = true;
+        while (continuar) {
+            System.out.println("Dinero: " + players[posicionPlayer].getMoney());
+            System.out.println("Pista: " + pista);
+            ruleta.girarRuleta();
+            System.out.println("La ruleta ha caído en " + ruleta.getResultadoRuleta());
+            switch (ruleta.getResultadoRuleta().toUpperCase()) {
+                case "QUIEBRA":
+                    players[posicionPlayer].setMoney(0);
+                    break;
+                case "PIERDE TURNO":
+                    if (players[posicionPlayer].getComodin() > 0) {
+                        continuar = true;
+                        players[posicionPlayer].setComodin(players[posicionPlayer].getComodin() - 1);
+                    }
+                    else {
+                        continuar = false;
+                    }
+                case "X2":
+                    players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() * 2);
+                    break;
+                case "1/2":
+                    players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() / 2);
+                    break;
+                case "COMODIN":
+                    players[posicionPlayer].setComodin(players[posicionPlayer].getComodin() + 1);
+                    break;
+                default:
+                    int premio = parseInt(ruleta.getResultadoRuleta());
+                    int eleccionJugador = definitions.teclado.nextInt();
 
+                    do {
+                        System.out.println("1. Resolver");
+
+                        if (players[posicionPlayer].getMoney() > 50) {
+                            System.out.println("2. Comprar vocal");
+                        }
+                        else {
+                            System.out.println("2. Comprar vocal (No tienes suficiente dinero)");
+                        }
+                        System.out.println("3. Probar letra " + premio);
+                        switch (eleccionJugador) {
+                            case 1:
+                                System.out.println("Introduzca la frase");
+                                String frase = definitions.teclado.nextLine();
+                                if (frase.equals(enigmaFrase)) {
+                                    players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() + premio);
+                                }
+                                break;
+                            case 2:
+                                if (players[posicionPlayer].getMoney() < 50) {
+                                    System.out.println("No tienes suficiente dinero");
+                                    break;
+                                }
+                                else {
+                                    System.out.println("Introduzca la vocal");
+                                    char vocal = definitions.teclado.nextLine().charAt(0);
+                                    if (comprobarLetra(vocal) > 0) {
+                                        players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() - 50);
+                                    }
+                                    else {
+                                        players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() + 50);
+                                    }
+                                }
+                                break;
+                            case 3:
+                                System.out.println("Introduzca la letra");
+                                char letra = definitions.teclado.nextLine().charAt(0);
+                                if (comprobarLetra(letra) > 0) {
+                                    players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() + premio);
+                                }
+                                else {
+                                    players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() - premio);
+                                }
+                                break;
+                            default:
+                                System.out.println("Opción no válida");
+                                break;
+                        }
+                    } while (!continuar);
+                    break;
+            }
+        }
+
+    }
+
+    /*
+    Este método recibe un char por argumento y comprueba que esté presente en char[][] enigmaPanel, si lo está,
+    copiar ese char a char[][] enigmaProgreso en la misma posición que en char[][] enigmaPanel
+    y devolver el número de veces que aparece ese char en char[][] enigmaPanel
+     */
+
+    public int comprobarLetra(char letra) {
+        int contador = 0;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 14; j++) {
+                if (enigmaPanel[i][j] == letra) {
+                    enigmaProgreso[i][j] = letra;
+                    contador++;
+                }
+            }
+        }
+        return contador;
     }
 
     public int getNumeroJugadores() {
@@ -184,62 +279,11 @@ public class Engine {
         String respuesta = definitions.teclado.nextLine();
         if (respuesta.equals(this.enigmaFrase)) {
             System.out.println("Respuesta correcta");
-            player.setMoney(player.getMoney() + 120);
             return true;
         }
         else {
             System.out.println("Respuesta incorrecta");
             return false;
-        }
-    }
-
-    /**
-     * El método premio se encarga de asignar al jugador su premio en función de la casilla en la que haya caído.
-     * Si cae en una casilla con un número se le añade al jugador el dinero. Si el jugador cae en la casilla de
-     * quiebra, pierde all su dinero. En caso de que caiga en la casilla de x2, duplica su dinero. Si cae en la
-     * casilla de 1/2, da la mitad de su dinero a la banca. Al caer en la casilla de "pierde turno" y si el jugador
-     * no tiene un comodín pierde su turno, si tiene un comodín no se pierde su turno y se le quita ese comodín al
-     * jugador. Si cae en la casilla de comodín, se le añade un comodín.
-     */
-    @SuppressWarnings("GrazieInspection")
-    public void Premio() {
-        String premio = ruleta.girarRuleta();
-
-        int premioInt = 0;
-        int comodin = 0;
-        try {
-            premioInt = Integer.parseInt(premio);
-        } catch (NumberFormatException e) {
-            logger.info("Premio especial");
-        }
-
-
-        if (premioInt != 0) {
-            player.setMoney(player.getMoney() + premioInt);
-        }
-        else {
-            if (premio.equals("Quiebra")) {
-                player.setMoney(0);
-            }
-            else if (premio.equals("x2")) {
-                player.setMoney(player.getMoney() * 2);
-            }
-            else if (premio.equals("1/2")) {
-                player.setMoney(player.getMoney() / 2);
-            }
-            else if (premio.equals("Comodín")) {
-                comodin++;
-            }
-            else if (premio.equals("Pierde turno")) {
-                boolean continuar = player.isTurn();
-                if (comodin > 0) {
-                    continuar = true;
-                    comodin--;
-                }
-                else {
-                    continuar = false;
-                }
-            }
         }
     }
 

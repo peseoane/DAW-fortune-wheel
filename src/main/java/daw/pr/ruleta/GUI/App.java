@@ -27,7 +27,7 @@ public class App {
         playerInfoPanel.setLayout(new BoxLayout(playerInfoPanel, BoxLayout.X_AXIS));
         // Add a label for the player name.
         playerInfoPanel.add(new JLabel("JUGADOR: "));
-        playerInfoPanel.add(new JLabel(engine.getJugadorName())); // Replace "aquíLeyeraVariableJugador" with the
+        playerInfoPanel.add(new JLabel(engine.getJugadorName(0))); // Replace "aquíLeyeraVariableJugador" with the
         // actual variable that stores the player name.
         // Add a label for the player's money.
         playerInfoPanel.add(new JLabel(" | DINERO: "));
