@@ -14,7 +14,6 @@ public class Engine {
 
     static Logger logger = LogManager.getLogger(Main.class);
     private final SQLDriver sql = new SQLDriver();
-    private final Player player = new Player("test", 0);
     private final int turnPlayer = 0;
     private final char[][] enigmaProgreso = new char[4][14];
 
@@ -29,8 +28,8 @@ public class Engine {
     public Engine() {
         int numeroJugadores = getNumeroJugadores();
         for (int i = 0; i < numeroJugadores; i++) {
-            this.players.add(registerPlayer());
-            logger.info("Jugador " + i + " registrado" + players.get(i).getName() + " " + players.get(i).getMoney());
+            this.players[i] = registerPlayer();
+            logger.info("Jugador " + i + " registrado" + players[i].getName() + " " + players[i].getMoney());
         }
         nuevoEnigmaYPista();
         this.pista = pistaActual;
@@ -42,7 +41,7 @@ public class Engine {
         ruleta = new Ruleta();
     }
 
-    public Engine(ArrayList players) {
+    public Engine(Player[] players) {
         this.players = players;
         nuevoEnigmaYPista();
     }
@@ -225,14 +224,14 @@ public class Engine {
 
 
     public Player getJugador() {
-        return this.players.get(turnPlayer);
+        return this.players[turnPlayer];
     }
 
     public char[][] getEnigmaProgreso() {
         return enigmaProgreso;
     }
 
-    public ArrayList getPlayers() {
+    public Player[] getPlayers() {
         return players;
     }
 
@@ -256,8 +255,8 @@ public class Engine {
         return pista;
     }
 
-    public String getJugadorName() {
-        return player.getName();
+    public String getJugadorName(int posicionPlayer) {
+        return players[posicionPlayer].getName();
     }
 
 
