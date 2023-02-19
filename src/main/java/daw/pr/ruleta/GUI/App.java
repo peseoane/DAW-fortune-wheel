@@ -13,7 +13,7 @@ public class App {
     static Logger logger = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
-
+        logger.info("Iniciando juego...");
         Engine engine = new Engine();
 
         // Get the panel array from the Enigma object

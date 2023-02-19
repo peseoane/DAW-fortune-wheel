@@ -9,6 +9,7 @@ public class Enigma {
 
     static Logger logger = LogManager.getLogger(Main.class);
     private final char[][] panelEnigma;
+    String pista;
 
     /**
      * Un enigma está formado por un total de 12+14+14+12=52 casillas distribuidas de esa forma.
@@ -16,12 +17,10 @@ public class Enigma {
      * Por cada array, debemos comprobar que no se corten los tokens de las palabras al pasarlos,
      * Dado que el panel no es un array perfecto, comprobamos que cada palabra del Enigma cabe tanto en longitud global
      * como por línea, si alguna palabra se corta, lanzamos excepción.
-     *
-     * @param enigma Acepta una frase en formato texto plano desde el SQL, se supone que ya compatibles.
      */
     public Enigma(SQLDriver sql) {
         String[] enigmaTokenizado = tokenizarFrase(sql.getEnigma());
-        String pista = sql.getPista();
+        pista = sql.getPista();
         panelEnigma = cuantosTokensPorLinea(enigmaTokenizado);
     }
 
@@ -72,6 +71,10 @@ public class Enigma {
             }
         }
         return panel;
+    }
+
+    public String getPista() {
+        return pista;
     }
 
     public char[][] getPanel() {

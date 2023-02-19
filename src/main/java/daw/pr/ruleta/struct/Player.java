@@ -20,7 +20,6 @@ public class Player {
     public Player(String name, int money) {
         this.name = name;
         this.money = money;
-        this.force = (int) (Math.random() * (30 - 12 + 1) + 12);
     }
 
     public static Logger getLogger() {
@@ -81,4 +80,5 @@ public class Player {
         }
         return vocalSeleccionada;
     }
+
 }

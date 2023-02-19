@@ -2,7 +2,8 @@ package daw.pr.ruleta.logic;
 
 public class Ruleta {
 
-    private final String[] ruleta = {"Quiebra", "x2", "100", "50", "100", "150", "Pierde turno", "150", "100", "50",
+    private final String[] ruleta = {"Quiebra", "x2", "100", "50", "100", "150", "Pierde turno", "150", "100",
+            "50",
             "100", "50", "100", "200", "50", "150", "1/2", "50", "150", "100", "Comodín", "150", "100", "50", "100",
             "50", "100", "200",};
     private final String ruletaTemplate = """
@@ -10,16 +11,40 @@ public class Ruleta {
             """;
     private final String resultadoRuleta;
 
-    public Ruleta(Player player) {
-        this.player = player;
+    public Ruleta() {
+        resultadoRuleta = this.girarRuleta();
     }
 
-
-    public String girarRuleta(Player player) {
-        return ruleta(player);
+    private static void wheelArrow(String StringLength) {
+        for (int j = 0; j < StringLength.length(); j++) {
+            if (j == StringLength.length() / 2) {
+                System.out.print("↓");
+            }
+            else {
+                System.out.print("_");
+            }
+        }
+        System.out.println();
     }
 
-    private String ruleta(Player player) {
+    public String[] getRuleta() {
+        return ruleta;
+    }
+
+    public String getResultadoRuleta() {
+        return resultadoRuleta;
+    }
+
+    /*
+    private int calcularFuerza(int force) {
+        // Aceptar force como seed de un generador de aleatorios entre 40 y 10
+        int max = 40;
+        int min = 12;
+        int random = (int) (Math.random() * (max - min + 1) + min);
+        return random;
+    }*/
+
+    public String girarRuleta() {
         // Vamos a crear un array con los posibles valores de la ruleta
 
         // Genera un entero aleatorio que esté comprendido entre 12 y 30.
@@ -31,8 +56,8 @@ public class Ruleta {
         int i = 0;
         StringBuilder activeRuleta = new StringBuilder();
         i = casillaInicio;
-
-        for (int j = 0; j < player.getForce(); j++) {
+        int force = (int) (Math.random() * (30 - 12 + 1) + 12);
+        for (int j = 0; j < force; j++) {
             if (i >= (ruleta.length - 1)) {
                 System.out.println("I ES CERO");
                 i = 0;
