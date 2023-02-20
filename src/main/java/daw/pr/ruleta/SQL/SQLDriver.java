@@ -13,7 +13,7 @@ public class SQLDriver {
     String pista;
 
     public SQLDriver() {
-        enigma = sanitize(getEnigma()); // Patch! También lo anula por acomplamiento...
+        enigma = getEnigma(); // Patch! También lo anula por acomplamiento...
         pista = getPista();
     }
 
@@ -75,18 +75,5 @@ public class SQLDriver {
                 """.formatted(enigma);
     }
 
-    private String sanitize(String enigma) {
-        logger.info("Se va a sanear el input: " + enigma);
-        enigma = enigma.toUpperCase();
-        enigma = enigma.replaceAll("[ÁÀÂÄ]", "A");
-        enigma = enigma.replaceAll("[ÉÈÊË]", "E");
-        enigma = enigma.replaceAll("[ÍÌÎÏ]", "I");
-        enigma = enigma.replaceAll("[ÓÒÔÖ]", "O");
-        enigma = enigma.replaceAll("[ÚÙÛÜ]", "U");
-        enigma = enigma.replaceAll("[.,;:]", "");
-        enigma = enigma.replaceAll("[¿?¡!]", "");
-        logger.info("Se ha sanado el input: " + enigma);
-        return enigma;
-    }
 
 }
