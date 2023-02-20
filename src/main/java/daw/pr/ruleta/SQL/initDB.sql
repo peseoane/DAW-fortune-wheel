@@ -9,6 +9,7 @@ CREATE TABLE enigmas
 );
 
 
+
 DROP TABLE jugadores;
 CREATE TABLE jugadores
 (
