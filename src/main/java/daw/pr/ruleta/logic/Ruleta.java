@@ -59,7 +59,6 @@ public class Ruleta {
         int force = (int) (Math.random() * (30 - 12 + 1) + 12);
         for (int j = 0; j < force; j++) {
             if (i >= (ruleta.length - 1)) {
-                System.out.println("I ES CERO");
                 i = 0;
             }
             else {
