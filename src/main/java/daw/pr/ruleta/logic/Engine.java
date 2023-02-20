@@ -308,22 +308,6 @@ public class Engine {
         this.enigmaPanel = enigmaPanel;
     }
 
-    public boolean intentarResolverPanel() {
-        System.out.println("Introduzca la respuesta");
-        String respuesta = definitions.teclado.nextLine();
-        if (respuesta.equals(this.frase)) {
-            System.out.println("Respuesta correcta");
-            return true;
-        }
-        else {
-            System.out.println("Respuesta incorrecta");
-            return false;
-        }
-    }
-
-    public void start() {
-    }
-
     public void showConsonant() {
         System.out.println("Que consonante quieres revelar?");
         String consonant = definitions.teclado.nextLine();
