@@ -10,6 +10,7 @@ public class Enigma {
     static Logger logger = LogManager.getLogger(Main.class);
     private final char[][] panelEnigma;
     String pista;
+    String frase;
 
     /**
      * Un enigma está formado por un total de 12+14+14+12=52 casillas distribuidas de esa forma.
@@ -19,7 +20,8 @@ public class Enigma {
      * como por línea, si alguna palabra se corta, lanzamos excepción.
      */
     public Enigma(SQLDriver sql) {
-        String[] enigmaTokenizado = tokenizarFrase(sql.getEnigma());
+        frase = sql.getEnigma();
+        String[] enigmaTokenizado = tokenizarFrase(frase);
         pista = sql.getPista();
         panelEnigma = cuantosTokensPorLinea(enigmaTokenizado);
     }
@@ -81,8 +83,8 @@ public class Enigma {
         return panelEnigma;
     }
 
-    public String getEnigma() {
-        return getPanelEnigma();
+    public String getFrase() {
+        return frase;
     }
 
     public String getPanelEnigma() {

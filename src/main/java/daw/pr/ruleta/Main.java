@@ -12,11 +12,7 @@ public class Main {
         int turno = 0;
 
         Engine engine = new Engine();
-
-        int numJugadores = engine.getNumeroJugadores();
-
-        // generate random number between 0 and numJugadores
-        int n = (int) (Math.random() * (numJugadores + 1));
+        //engine.start();
 
     }
 }

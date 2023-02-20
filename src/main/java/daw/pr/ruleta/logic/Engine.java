@@ -17,16 +17,17 @@ public class Engine {
     private final int turnPlayer = 0;
     private final char[][] enigmaProgreso = new char[4][14];
 
-    private Player[] players;
+    private final Player[] players;
     private String pista;
     private Ruleta ruleta;
     private char[][] enigmaPanel = new char[4][14];
     private String pistaActual;
-    private String enigmaFrase;
+    private String frase;
 
 
     public Engine() {
         int numeroJugadores = getNumeroJugadores();
+        this.players = new Player[numeroJugadores];
         for (int i = 0; i < numeroJugadores; i++) {
             this.players[i] = registerPlayer();
             logger.info("Jugador " + i + " registrado" + players[i].getName() + " " + players[i].getMoney());
@@ -39,6 +40,8 @@ public class Engine {
             }
         }
         ruleta = new Ruleta();
+        int inicio = new java.util.Random().nextInt(numeroJugadores);
+        generarPartida(inicio);
     }
 
     public Engine(Player[] players) {
@@ -51,14 +54,29 @@ public class Engine {
     }
 
     public void generarPartida(int posicionPlayer) {
+        boolean continuar = true;
+
         System.out.println("Turno de " + players[posicionPlayer].getName());
+        System.out.println("Dinero: " + players[posicionPlayer].getMoney());
+        System.out.println("Pista: " + pista);
+        String casilla = ruleta.getResultadoRuleta().toUpperCase();
+        logger.info("La ruleta ha caído en " + casilla);
+        System.out.println("La ruleta ha caído en " + casilla);
+        logger.info("El enigma es" + frase);
+        try {
+            int casillaInt = parseInt(casilla);
+            menuPremioNumerico(posicionPlayer, casillaInt);
+        } catch (Exception e) {
+            // pues es un premio especial
+            menuEspecial(posicionPlayer, casilla);
+        }
+
+    }
+
+    private void menuEspecial(int posicionPlayer, String casilla) {
         boolean continuar = true;
         while (continuar) {
-            System.out.println("Dinero: " + players[posicionPlayer].getMoney());
-            System.out.println("Pista: " + pista);
-            ruleta.girarRuleta();
-            System.out.println("La ruleta ha caído en " + ruleta.getResultadoRuleta());
-            switch (ruleta.getResultadoRuleta().toUpperCase()) {
+            switch (casilla) {
                 case "QUIEBRA":
                     players[posicionPlayer].setMoney(0);
                     continuar = false;
@@ -68,9 +86,12 @@ public class Engine {
                     if (players[posicionPlayer].getComodin() > 0) {
                         continuar = true;
                         players[posicionPlayer].setComodin(players[posicionPlayer].getComodin() - 1);
+                        logger.info("El jugador " + players[posicionPlayer].getName() + " ha usado un comodín");
                     }
                     else {
                         continuar = false;
+                        logger.info("El jugador " + players[posicionPlayer].getName() + " ha perdido el turno por no " +
+                                            "tener comodines");
                     }
                 case "X2":
                     players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() * 2);
@@ -82,66 +103,74 @@ public class Engine {
                     logger.info("El jugador " + players[posicionPlayer].getName() + " ha ganado la mitad de dinero");
                     continuar = false;
                     break;
-                case "COMODIN":
+                case "COMODÍN":
                     players[posicionPlayer].setComodin(players[posicionPlayer].getComodin() + 1);
+                    logger.info("El jugador " + players[posicionPlayer].getName() + " ha ganado un comodín");
                     break;
                 default:
-                    int premio = parseInt(ruleta.getResultadoRuleta());
-                    int eleccionJugador = definitions.teclado.nextInt();
-
-                    do {
-                        System.out.println("1. Resolver");
-
-                        if (players[posicionPlayer].getMoney() > 50) {
-                            System.out.println("2. Comprar vocal");
-                        }
-                        else {
-                            System.out.println("2. Comprar vocal (No tienes suficiente dinero)");
-                        }
-                        System.out.println("3. Probar letra " + premio);
-                        switch (eleccionJugador) {
-                            case 1:
-                                System.out.println("Introduzca la frase");
-                                String frase = definitions.teclado.nextLine();
-                                if (frase.equals(enigmaFrase)) {
-                                    players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() + premio);
-                                }
-                                break;
-                            case 2:
-                                if (players[posicionPlayer].getMoney() < 50) {
-                                    System.out.println("No tienes suficiente dinero");
-                                    break;
-                                }
-                                else {
-                                    System.out.println("Introduzca la vocal");
-                                    char vocal = definitions.teclado.nextLine().charAt(0);
-                                    if (comprobarLetra(vocal) > 0) {
-                                        players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() - 50);
-                                    }
-                                    else {
-                                        players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() + 50);
-                                    }
-                                }
-                                break;
-                            case 3:
-                                System.out.println("Introduzca la letra");
-                                char letra = definitions.teclado.nextLine().charAt(0);
-                                if (comprobarLetra(letra) > 0) {
-                                    players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() + premio);
-                                }
-                                else {
-                                    players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() - premio);
-                                }
-                                break;
-                            default:
-                                System.out.println("Opción no válida");
-                                break;
-                        }
-                    } while (!continuar);
+                    continuar = false;
+                    logger.info("La ruleta ha caído en una casilla no válida");
                     break;
             }
         }
+    }
 
+    public void menuPremioNumerico(int posicionPlayer, int premio) {
+        System.out.println(frase);
+        System.out.println("1. Resolver");
+        if (players[posicionPlayer].getMoney() > 50) {
+            System.out.println("2. Comprar vocal");
+        }
+        else {
+            System.out.println("2. Comprar vocal (No tienes suficiente dinero)");
+        }
+        System.out.println("3. Probar letra " + premio);
+        int eleccionJugador = definitions.teclado.nextInt();
+        switch (eleccionJugador) {
+            case 1:
+                definitions.teclado.nextLine();
+                System.out.println("Introduzca la frase");
+                String fraseUser = definitions.teclado.nextLine();
+                if (fraseUser.equalsIgnoreCase(frase)) {
+                    players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() + premio);
+                    logger.info("La frase se ha introducido correctamente");
+                }
+                else {
+                    players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() - premio);
+                    logger.info("La frase se ha introducido incorrectamente");
+                }
+                break;
+            case 2:
+                if (players[posicionPlayer].getMoney() < 50) {
+                    System.out.println("No tienes suficiente dinero");
+                    break;
+                }
+                else {
+                    System.out.println("Introduzca la vocal");
+                    char vocal = definitions.teclado.nextLine().charAt(0);
+                    if (comprobarLetra(vocal) > 0) {
+                        players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() - 50);
+                        logger.info("La vocal se ha introducido correctamente");
+                    }
+                    else {
+                        players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() + 50);
+                    }
+                }
+                break;
+            case 3:
+                System.out.println("Introduzca la letra");
+                char letra = definitions.teclado.nextLine().charAt(0);
+                if (comprobarLetra(letra) > 0) {
+                    players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() + premio);
+                }
+                else {
+                    players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() - premio);
+                }
+                break;
+            default:
+                System.out.println("Opción no válida");
+                break;
+        }
     }
 
     /*
@@ -223,7 +252,7 @@ public class Engine {
 
     public void nuevoEnigmaYPista() {
         Enigma enigma = new Enigma(new SQLDriver());
-        this.enigmaFrase = enigma.getEnigma();
+        this.frase = enigma.getFrase();
         this.pistaActual = enigma.getPista();
         this.enigmaPanel = enigma.getPanel();
     }
@@ -250,11 +279,11 @@ public class Engine {
     }
 
     public String getEnigmaFrase() {
-        return enigmaFrase;
+        return frase;
     }
 
     public void setEnigmaFrase(String enigmaFrase) {
-        this.enigmaFrase = enigmaFrase;
+        this.frase = enigmaFrase;
     }
 
     public String getPista() {
@@ -282,7 +311,7 @@ public class Engine {
     public boolean intentarResolverPanel() {
         System.out.println("Introduzca la respuesta");
         String respuesta = definitions.teclado.nextLine();
-        if (respuesta.equals(this.enigmaFrase)) {
+        if (respuesta.equals(this.frase)) {
             System.out.println("Respuesta correcta");
             return true;
         }
@@ -290,6 +319,9 @@ public class Engine {
             System.out.println("Respuesta incorrecta");
             return false;
         }
+    }
+
+    public void start() {
     }
 
     public void showConsonant() {
