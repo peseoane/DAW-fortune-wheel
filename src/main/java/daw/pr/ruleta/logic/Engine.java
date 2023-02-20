@@ -61,6 +61,8 @@ public class Engine {
             switch (ruleta.getResultadoRuleta().toUpperCase()) {
                 case "QUIEBRA":
                     players[posicionPlayer].setMoney(0);
+                    continuar = false;
+                    logger.info("El jugador " + players[posicionPlayer].getName() + " ha quedado en quiebra");
                     break;
                 case "PIERDE TURNO":
                     if (players[posicionPlayer].getComodin() > 0) {
@@ -72,9 +74,13 @@ public class Engine {
                     }
                 case "X2":
                     players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() * 2);
+                    logger.info("El jugador " + players[posicionPlayer].getName() + " ha ganado el doble de dinero");
+                    continuar = false;
                     break;
                 case "1/2":
                     players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() / 2);
+                    logger.info("El jugador " + players[posicionPlayer].getName() + " ha ganado la mitad de dinero");
+                    continuar = false;
                     break;
                 case "COMODIN":
                     players[posicionPlayer].setComodin(players[posicionPlayer].getComodin() + 1);
