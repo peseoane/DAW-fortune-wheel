@@ -13,7 +13,6 @@ import static java.lang.Integer.parseInt;
 public class Engine {
 
     static Logger logger = LogManager.getLogger(Main.class);
-    private final SQLDriver sql = new SQLDriver();
     private final int turnPlayer = 0;
     private final char[][] enigmaProgreso = new char[4][14];
 
@@ -23,16 +22,16 @@ public class Engine {
     private char[][] enigmaPanel = new char[4][14];
     private String pistaActual;
     private String frase;
-
+    private boolean isPanelSolved = false;
 
     public Engine() {
+        nuevoEnigmaYPista();
         int numeroJugadores = getNumeroJugadores();
         this.players = new Player[numeroJugadores];
         for (int i = 0; i < numeroJugadores; i++) {
             this.players[i] = registerPlayer();
             logger.info("Jugador " + i + " registrado" + players[i].getName() + " " + players[i].getMoney());
         }
-        nuevoEnigmaYPista();
         this.pista = pistaActual;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 14; j++) {
@@ -42,80 +41,111 @@ public class Engine {
         ruleta = new Ruleta();
         int inicio = new java.util.Random().nextInt(numeroJugadores);
         generarPartida(inicio);
+        while (!getPanelSolved()) {
+            if (inicio == numeroJugadores) {
+                inicio = 0;
+            }
+            generarPartida(++inicio);
+        }
+        logger.info("El panel ha sido resuelto");
     }
 
     public Engine(Player[] players) {
         this.players = players;
-        nuevoEnigmaYPista();
+    }
+
+    public boolean getPanelSolved() {
+        return isPanelSolved;
+    }
+
+    public boolean setPanelSolved(boolean panelSolved) {
+        isPanelSolved = panelSolved;
+        return isPanelSolved;
     }
 
     public void mostrarMenu(Player player, int premio) {
 
     }
 
+    public boolean isNumeric(String cadena) {
+
+        boolean resultado;
+
+        try {
+            Integer.parseInt(cadena);
+            resultado = true;
+        } catch (NumberFormatException excepcion) {
+            resultado = false;
+        }
+
+        return resultado;
+    }
+
+
     public void generarPartida(int posicionPlayer) {
-        boolean continuar = true;
 
         System.out.println("Turno de " + players[posicionPlayer].getName());
         System.out.println("Dinero: " + players[posicionPlayer].getMoney());
         System.out.println("Pista: " + pista);
-        String casilla = ruleta.getResultadoRuleta().toUpperCase();
-        logger.info("La ruleta ha caído en " + casilla);
-        System.out.println("La ruleta ha caído en " + casilla);
-        logger.info("El enigma es" + frase);
-        try {
-            int casillaInt = parseInt(casilla);
-            menuPremioNumerico(posicionPlayer, casillaInt);
-        } catch (Exception e) {
-            // pues es un premio especial
-            menuEspecial(posicionPlayer, casilla);
-        }
 
-    }
+        boolean status = true;
 
-    private void menuEspecial(int posicionPlayer, String casilla) {
-        boolean continuar = true;
-        while (continuar) {
-            switch (casilla) {
-                case "QUIEBRA":
-                    players[posicionPlayer].setMoney(0);
-                    continuar = false;
-                    logger.info("El jugador " + players[posicionPlayer].getName() + " ha quedado en quiebra");
-                    break;
-                case "PIERDE TURNO":
-                    if (players[posicionPlayer].getComodin() > 0) {
-                        continuar = true;
-                        players[posicionPlayer].setComodin(players[posicionPlayer].getComodin() - 1);
-                        logger.info("El jugador " + players[posicionPlayer].getName() + " ha usado un comodín");
-                    }
-                    else {
-                        continuar = false;
-                        logger.info("El jugador " + players[posicionPlayer].getName() + " ha perdido el turno por no " +
-                                            "tener comodines");
-                    }
-                case "X2":
-                    players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() * 2);
-                    logger.info("El jugador " + players[posicionPlayer].getName() + " ha ganado el doble de dinero");
-                    continuar = false;
-                    break;
-                case "1/2":
-                    players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() / 2);
-                    logger.info("El jugador " + players[posicionPlayer].getName() + " ha ganado la mitad de dinero");
-                    continuar = false;
-                    break;
-                case "COMODÍN":
-                    players[posicionPlayer].setComodin(players[posicionPlayer].getComodin() + 1);
-                    logger.info("El jugador " + players[posicionPlayer].getName() + " ha ganado un comodín");
-                    break;
-                default:
-                    continuar = false;
-                    logger.info("La ruleta ha caído en una casilla no válida");
-                    break;
+        while (status) {
+            String casilla = ruleta.getResultadoRuleta().toUpperCase();
+            logger.info("La ruleta ha caído en " + casilla);
+            System.out.println("La ruleta ha caído en " + casilla);
+            logger.info("El enigma es" + frase);
+            if (isNumeric(casilla)) {
+                status = menuPremioNumerico(posicionPlayer, parseInt(casilla));
+                logger.info("El jugador " + players[posicionPlayer].getName() + " ha decidido " + status);
+            }
+            else {
+                status = menuEspecial(posicionPlayer, casilla);
+                logger.info("El jugador " + players[posicionPlayer].getName() + " ha decidido " + status);
             }
         }
+        logger.info("El jugador " + players[posicionPlayer].getName() + " ha terminado su turno");
     }
 
-    public void menuPremioNumerico(int posicionPlayer, int premio) {
+    private boolean menuEspecial(int posicionPlayer, String casilla) {
+        boolean continuar = true;
+        switch (casilla) {
+            case "QUIEBRA":
+                players[posicionPlayer].setMoney(0);
+                logger.info("El jugador " + players[posicionPlayer].getName() + " ha quedado en quiebra");
+                continuar = false;
+            case "PIERDE TURNO":
+                if (players[posicionPlayer].getComodin() > 0) {
+                    players[posicionPlayer].setComodin(players[posicionPlayer].getComodin() - 1);
+                    logger.info("El jugador " + players[posicionPlayer].getName() + " ha usado un comodín");
+                    continuar = true;
+                }
+                else {
+                    logger.info("El jugador " + players[posicionPlayer].getName() + " ha perdido el turno por no " +
+                                        "tener comodines");
+                    continuar = false;
+                }
+            case "X2":
+                players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() * 2);
+                logger.info("El jugador " + players[posicionPlayer].getName() + " ha ganado el doble de dinero");
+                continuar = false;
+                break;
+            case "1/2":
+                players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() / 2);
+                logger.info("El jugador " + players[posicionPlayer].getName() + " ha ganado la mitad de dinero");
+                continuar = false;
+                break;
+            case "COMODÍN":
+                players[posicionPlayer].setComodin(players[posicionPlayer].getComodin() + 1);
+                logger.info("El jugador " + players[posicionPlayer].getName() + " ha ganado un comodín");
+                continuar = true;
+                break;
+        }
+        return continuar;
+    }
+
+    public boolean menuPremioNumerico(int posicionPlayer, int premio) {
+        boolean status = true;
         System.out.println(frase);
         System.out.println("1. Resolver");
         if (players[posicionPlayer].getMoney() > 50) {
@@ -134,10 +164,13 @@ public class Engine {
                 if (fraseUser.equalsIgnoreCase(frase)) {
                     players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() + premio);
                     logger.info("La frase se ha introducido correctamente");
+                    setPanelSolved(true);
+                    status = false;
                 }
                 else {
                     players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() - premio);
                     logger.info("La frase se ha introducido incorrectamente");
+                    status = true;
                 }
                 break;
             case 2:
@@ -151,26 +184,32 @@ public class Engine {
                     if (comprobarLetra(vocal) > 0) {
                         players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() - 50);
                         logger.info("La vocal se ha introducido correctamente");
+                        status = false;
                     }
                     else {
                         players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() + 50);
+                        status = true;
                     }
                 }
                 break;
             case 3:
                 System.out.println("Introduzca la letra");
+                definitions.teclado.nextLine();
                 char letra = definitions.teclado.nextLine().charAt(0);
                 if (comprobarLetra(letra) > 0) {
                     players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() + premio);
+                    status = true;
                 }
                 else {
-                    players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() - premio);
+                    players[posicionPlayer].setMoney(players[posicionPlayer].getMoney());
+                    status = false;
                 }
                 break;
             default:
                 System.out.println("Opción no válida");
                 break;
         }
+        return status;
     }
 
     /*
@@ -252,39 +291,34 @@ public class Engine {
 
     public void nuevoEnigmaYPista() {
         Enigma enigma = new Enigma(new SQLDriver());
-        this.frase = enigma.getFrase();
-        this.pistaActual = enigma.getPista();
-        this.enigmaPanel = enigma.getPanel();
+        frase = sanitize(enigma.getFrase());
+        pistaActual = enigma.getPista();
+        enigmaPanel = enigma.getPanel();
+        logger.info("Se ha creado un nuevo enigma");
+        logger.info("Frase = " + frase);
+        logger.info("Pista = " + pistaActual);
+        logger.info("Panel = " + enigmaPanel);
     }
 
-
-    public Player getJugador() {
-        return this.players[turnPlayer];
+    private String sanitize(String fraseMala) {
+        logger.info("Se va a sanear el input: ");
+        String fraseBuena = fraseMala.toUpperCase();
+        fraseBuena = fraseBuena.replaceAll("[ÁÀÂÄ]", "A");
+        fraseBuena = fraseBuena.replaceAll("[ÉÈÊË]", "E");
+        fraseBuena = fraseBuena.replaceAll("[ÍÌÎÏ]", "I");
+        fraseBuena = fraseBuena.replaceAll("[ÓÒÔÖ]", "O");
+        fraseBuena = fraseBuena.replaceAll("[ÚÙÛÜ]", "U");
+        fraseBuena = fraseBuena.replaceAll("[.,;:]", "");
+        fraseBuena = fraseBuena.replaceAll("[¿?¡!]", "");
+        logger.info("Se ha sanado el input: " + fraseBuena);
+        return fraseBuena;
     }
+
 
     public char[][] getEnigmaProgreso() {
         return enigmaProgreso;
     }
 
-    public Player[] getPlayers() {
-        return players;
-    }
-
-    public String getPistaActual() {
-        return pistaActual;
-    }
-
-    public void setPistaActual(String pistaActual) {
-        this.pistaActual = pistaActual;
-    }
-
-    public String getEnigmaFrase() {
-        return frase;
-    }
-
-    public void setEnigmaFrase(String enigmaFrase) {
-        this.frase = enigmaFrase;
-    }
 
     public String getPista() {
         return pista;

@@ -21,8 +21,8 @@ public class Enigma {
      */
     public Enigma(SQLDriver sql) {
         frase = sql.getEnigma();
-        String[] enigmaTokenizado = tokenizarFrase(frase);
         pista = sql.getPista();
+        String[] enigmaTokenizado = tokenizarFrase(frase);
         panelEnigma = cuantosTokensPorLinea(enigmaTokenizado);
     }
 
