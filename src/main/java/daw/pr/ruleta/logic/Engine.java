@@ -23,6 +23,7 @@ public class Engine {
     private char[][] enigmaPanel = new char[4][14];
     private boolean isPanelSolved = false;
     private int numeroPartida = 0;
+    private int jugadorSeleccionado;
 
     public Engine() {
 
@@ -53,7 +54,9 @@ public class Engine {
         this.pista = pistaActual;
         generarPanelsinResolver();
         ruleta = new Ruleta();
-        int jugadorSeleccionado = new java.util.Random().nextInt(numeroJugadores - 1);
+        if (numeroJugadores > 1) {
+            jugadorSeleccionado = new java.util.Random().nextInt(numeroJugadores - 1);
+        }
         generarPartida(jugadorSeleccionado);
         while (!getPanelSolved()) {
             if (jugadorSeleccionado == numeroJugadores - 1) {
@@ -72,6 +75,7 @@ public class Engine {
 
         logger.info("Generando panel sin resolver");
         imprimirPanel(enigmaProgreso);
+        sanitize(frase);
 
         // copiar enigmaPanel a enigmaProgreso
 
@@ -233,7 +237,7 @@ public class Engine {
             case 3:
                 System.out.println("Introduzca la letra");
                 definitions.teclado.nextLine();
-                char letra = definitions.teclado.nextLine().charAt(0);
+                char letra = definitions.teclado.nextLine().toUpperCase().charAt(0);
                 if (comprobarLetra(letra) > 0) {
                     players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() + premio);
                     status = true;
@@ -261,8 +265,13 @@ public class Engine {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 14; j++) {
                 if (enigmaPanel[i][j] == letra) {
-                    enigmaProgreso[i][j] = letra;
-                    contador++;
+                    if (letra == 'a' || letra == 'e' || letra == 'i' || letra == 'o' || letra == 'u') {
+                        System.err.println("Las vocales no se pueden revelar así");
+                    }
+                    else {
+                        enigmaProgreso[i][j] = letra;
+                        contador++;
+                    }
                 }
             }
         }
@@ -388,9 +397,11 @@ public class Engine {
         }
         else {
             for (int i = 0; i < enigmaProgreso.length; i++) {
-                if (enigmaPanel[i].equals(consonant.charAt(0))) {
-                    enigmaProgreso[i] = enigmaPanel[i];
-                    logger.info("La letra " + consonant + " se ha revelado");
+                for (int j = 0; j < enigmaPanel.length; j++) {
+                    if (enigmaPanel[i][j] == consonant.charAt(0)) {
+                        enigmaProgreso[i][j] = enigmaPanel[i][j];
+                        logger.info("La letra " + consonant + " se ha revelado");
+                    }
                 }
                 logger.info("La letra " + consonant + " no se ha revelado");
             }
