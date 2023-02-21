@@ -9,10 +9,9 @@ public class Ruleta {
     private final String ruletaTemplate = """
             |   %s  |    %s  |   %s  |
             """;
-    private final String resultadoRuleta;
+    private StringBuilder resultadoRuleta;
 
     public Ruleta() {
-        resultadoRuleta = this.girarRuleta();
     }
 
     private static void wheelArrow(String StringLength) {
@@ -27,24 +26,23 @@ public class Ruleta {
         System.out.println();
     }
 
+    public String getRuletaTemplate() {
+        return ruletaTemplate;
+    }
+
     public String[] getRuleta() {
         return ruleta;
     }
 
     public String getResultadoRuleta() {
-        return resultadoRuleta;
+        return resultadoRuleta.toString();
     }
 
-    /*
-    private int calcularFuerza(int force) {
-        // Aceptar force como seed de un generador de aleatorios entre 40 y 10
-        int max = 40;
-        int min = 12;
-        int random = (int) (Math.random() * (max - min + 1) + min);
-        return random;
-    }*/
-
-    public String girarRuleta() {
+    public void setResultadoRuleta(StringBuilder resultadoRuleta) {
+        this.resultadoRuleta = resultadoRuleta;
+    }
+    
+    public StringBuilder girarRuleta() {
         // Vamos a crear un array con los posibles valores de la ruleta
 
         // Genera un entero aleatorio que esté comprendido entre 12 y 30.
@@ -97,6 +95,7 @@ public class Ruleta {
                 }
             }
         }
-        return activeRuleta.toString();
+        setResultadoRuleta(activeRuleta);
+        return activeRuleta;
     }
 }

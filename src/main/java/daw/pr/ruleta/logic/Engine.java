@@ -13,41 +13,82 @@ import static java.lang.Integer.parseInt;
 public class Engine {
 
     static Logger logger = LogManager.getLogger(Main.class);
-    private final int turnPlayer = 0;
-    private final char[][] enigmaProgreso = new char[4][14];
-
     private final Player[] players;
+    private final char[][] enigmaProgreso = new char[4][14];
+    private boolean isGameFinished = false;
     private String pista;
     private Ruleta ruleta;
-    private char[][] enigmaPanel = new char[4][14];
     private String pistaActual;
     private String frase;
+    private char[][] enigmaPanel = new char[4][14];
     private boolean isPanelSolved = false;
+    private int numeroPartida = 0;
 
     public Engine() {
-        nuevoEnigmaYPista();
+
         int numeroJugadores = getNumeroJugadores();
         this.players = new Player[numeroJugadores];
         for (int i = 0; i < numeroJugadores; i++) {
             this.players[i] = registerPlayer();
             logger.info("Jugador " + i + " registrado" + players[i].getName() + " " + players[i].getMoney());
         }
-        this.pista = pistaActual;
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 14; j++) {
-                enigmaProgreso[i][j] = '*';
+        while (!isGameFinished) {
+            logger.info("Jugando partida " + numeroPartida);
+            jugarPartida(numeroJugadores);
+            numeroPartida++;
+            System.out.println("Desea continuar? (s/n)");
+            String deseaContinuar = definitions.teclado.nextLine();
+            if (deseaContinuar.equalsIgnoreCase("n")) {
+                logger.info("El juego ha terminado");
+                isGameFinished = true;
+            }
+            else {
+                logger.info("Continuando partida");
             }
         }
+    }
+
+    private void jugarPartida(int numeroJugadores) {
+        nuevoEnigmaYPista();
+        this.pista = pistaActual;
+        generarPanelsinResolver();
         ruleta = new Ruleta();
-        int inicio = new java.util.Random().nextInt(numeroJugadores);
-        generarPartida(inicio);
+        int jugadorSeleccionado = new java.util.Random().nextInt(numeroJugadores - 1);
+        generarPartida(jugadorSeleccionado);
         while (!getPanelSolved()) {
-            if (inicio == numeroJugadores) {
-                inicio = 0;
+            if (jugadorSeleccionado == numeroJugadores - 1) {
+                jugadorSeleccionado = 0;
             }
-            generarPartida(++inicio);
+            else {
+                jugadorSeleccionado++;
+            }
+            generarPartida(jugadorSeleccionado);
         }
         logger.info("El panel ha sido resuelto");
+    }
+
+
+    private void generarPanelsinResolver() {
+
+        logger.info("Generando panel sin resolver");
+        imprimirPanel(enigmaProgreso);
+
+        // copiar enigmaPanel a enigmaProgreso
+
+        for (int i = 0; i < enigmaPanel.length; i++) {
+            for (int j = 0; j < enigmaPanel[i].length; j++) {
+                // check if enigmaPanel[i][j] is a char
+                if (Character.isLetter(enigmaPanel[i][j])) {
+                    enigmaProgreso[i][j] = '_';
+                }
+                else {
+                    enigmaProgreso[i][j] = '*';
+                }
+            }
+        }
+        logger.info("Panel sin resolver generado");
+        imprimirPanel(enigmaProgreso);
+
     }
 
     public boolean getPanelSolved() {
@@ -59,9 +100,6 @@ public class Engine {
         return isPanelSolved;
     }
 
-    public void mostrarMenu(Player player, int premio) {
-
-    }
 
     public boolean isNumeric(String cadena) {
 
@@ -87,6 +125,8 @@ public class Engine {
         boolean status = true;
 
         while (status) {
+            ruleta.girarRuleta();
+            imprimirPanel(enigmaProgreso);
             String casilla = ruleta.getResultadoRuleta().toUpperCase();
             logger.info("La ruleta ha caído en " + casilla);
             System.out.println("La ruleta ha caído en " + casilla);
@@ -360,8 +400,10 @@ public class Engine {
     /* Genera método para imprimir los paneles char[][] */
     public void imprimirPanel(char[][] panel) {
         for (int i = 0; i < panel.length; i++) {
-            System.out.print(panel[i] + " ");
+            for (int j = 0; j < panel[i].length; j++) {
+                System.out.print(panel[i][j] + " ");
+            }
+            System.out.println();
         }
-        System.out.println();
     }
 }
