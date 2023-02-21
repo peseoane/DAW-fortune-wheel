@@ -50,10 +50,6 @@ public class Engine {
         logger.info("El panel ha sido resuelto");
     }
 
-    public Engine(Player[] players) {
-        this.players = players;
-    }
-
     public boolean getPanelSolved() {
         return isPanelSolved;
     }
@@ -114,6 +110,7 @@ public class Engine {
                 players[posicionPlayer].setMoney(0);
                 logger.info("El jugador " + players[posicionPlayer].getName() + " ha quedado en quiebra");
                 continuar = false;
+                break;
             case "PIERDE TURNO":
                 if (players[posicionPlayer].getComodin() > 0) {
                     players[posicionPlayer].setComodin(players[posicionPlayer].getComodin() - 1);
@@ -125,6 +122,7 @@ public class Engine {
                                         "tener comodines");
                     continuar = false;
                 }
+                break;
             case "X2":
                 players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() * 2);
                 logger.info("El jugador " + players[posicionPlayer].getName() + " ha ganado el doble de dinero");
