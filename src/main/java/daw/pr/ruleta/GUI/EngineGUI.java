@@ -38,6 +38,7 @@ public class EngineGUI {
             this.players[i] = registerPlayer();
             logger.info("Jugador " + i + " registrado" + players[i].getName() + " " + players[i].getMoney());
         }
+
         while (!isGameFinished) {
             for (Player eachPlayer : players) {
                 eachPlayer.setMoney(eachPlayer.getMoneyAcumulado());
@@ -53,6 +54,12 @@ public class EngineGUI {
             }
             else {
                 logger.info("Continuando partida");
+                for (Player eachPlayer : players) {
+                    // si dinero de each < 100 fijarlo a 100
+                    if (eachPlayer.getMoney() < 100) {
+                        eachPlayer.setMoneyAcumulado(100);
+                    }
+                }
             }
         }
     }

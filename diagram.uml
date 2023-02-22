@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="5.700001885003161" y="226.14105204071035">daw.pr.ruleta.GUI.EngineGUI</node>
+    <node x="-4.160144947651489" y="-14.24786663964914">daw.pr.ruleta.GUI.App</node>
+    <node x="416.75828304818856" y="800.0622123530712">daw.pr.ruleta.struct.Enigma</node>
+    <node x="191.84288341879946" y="764.7528979378608">daw.pr.ruleta.struct.Player</node>
+    <node x="377.6729134930727" y="1120.9365903829212">daw.pr.ruleta.SQL.SQLDriver</node>
+    <node x="-60.96794847071298" y="811.2161264719815">daw.pr.ruleta.logic.Ruleta</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="daw.pr.ruleta.struct.Enigma" target="daw.pr.ruleta.SQL.SQLDriver" relationship="DEPENDENCY">
+      <point x="-54.58536955511585" y="74.5" />
+      <point x="0.0" y="-51.5" />
+    </edge>
+    <edge source="daw.pr.ruleta.GUI.EngineGUI" target="daw.pr.ruleta.logic.Ruleta" relationship="TO_ONE">
+      <point x="-101.16795035571614" y="201.99999999999994" />
+      <point x="0.0" y="-75.5" />
+    </edge>
+    <edge source="daw.pr.ruleta.GUI.EngineGUI" target="daw.pr.ruleta.struct.Player" relationship="TO_MANY">
+      <point x="123.0" y="201.99999999999994" />
+      <point x="-14.642881533796299" y="-109.0" />
+    </edge>
+    <edge source="daw.pr.ruleta.GUI.App" target="daw.pr.ruleta.GUI.EngineGUI" relationship="CREATE">
+      <point x="15.000000000000014" y="62.99999999999999" />
+      <point x="34.139853167345365" y="-202.0" />
+    </edge>
+    <edge source="daw.pr.ruleta.GUI.EngineGUI" target="daw.pr.ruleta.logic.Ruleta" relationship="CREATE">
+      <point x="-12.667950355716144" y="201.99999999999994" />
+      <point x="88.5" y="-75.5" />
+    </edge>
+    <edge source="daw.pr.ruleta.GUI.EngineGUI" target="daw.pr.ruleta.GUI.App" relationship="DEPENDENCY">
+      <point x="19.13985316734535" y="-202.0" />
+      <point x="0.0" y="62.99999999999999" />
+    </edge>
+    <edge source="daw.pr.ruleta.GUI.EngineGUI" target="daw.pr.ruleta.struct.Player" relationship="CREATE">
+      <point x="108.0" y="201.99999999999994" />
+      <point x="-29.6428815337963" y="-109.0" />
+    </edge>
+    <edge source="daw.pr.ruleta.GUI.EngineGUI" target="daw.pr.ruleta.struct.Enigma" relationship="CREATE">
+      <point x="130.5" y="0.0" />
+      <point x="494.25828304818856" y="428.14105204071035" />
+      <point x="0.0" y="-74.5" />
+    </edge>
+    <edge source="daw.pr.ruleta.GUI.EngineGUI" target="daw.pr.ruleta.SQL.SQLDriver" relationship="CREATE">
+      <point x="12.332049644283856" y="201.99999999999994" />
+      <point x="148.532051529287" y="1172.4365903829212" />
+      <point x="-62.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Compact" zoom="0.3868149324861001" showDependencies="true" x="265.5000000000002" y="614.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+

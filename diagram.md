@@ -1,6 +1,3 @@
-# Ruleta de la fortuna.
-
-```mermaid
 classDiagram
 direction TB
 class App {
@@ -72,8 +69,3 @@ EngineGUI "1" *--> "ruleta 1" Ruleta
 EngineGUI  ..>  Ruleta : «create»
 EngineGUI  ..>  SQLDriver : «create»
 Enigma  ..>  SQLDriver 
-```
-
-> Work in progress
-
-![WCM0001.svg](assets%2FWCM0001.svg)
