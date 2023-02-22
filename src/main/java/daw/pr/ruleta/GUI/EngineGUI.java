@@ -17,10 +17,10 @@ import static daw.pr.ruleta.GUI.App.ventanaGUI;
 import static java.lang.Integer.parseInt;
 
 public class EngineGUI {
-
     static Logger logger = LogManager.getLogger(Main.class);
     private final Player[] players;
     private final char[][] enigmaProgreso = new char[4][14];
+    private int ultimoGanador = 5; // 0-4 validos 5 no establecido
     private boolean isGameFinished = false;
     private String pista;
     private Ruleta ruleta;
@@ -64,14 +64,26 @@ public class EngineGUI {
         }
     }
 
+    public int getUltimoGanador() {
+        return ultimoGanador;
+    }
+
+    public void setUltimoGanador(int ultimoGanador) {
+        this.ultimoGanador = ultimoGanador;
+    }
+
     private void jugarPartida(int numeroJugadores) {
         int jugadorSeleccionado = 0;
         nuevoEnigmaYPista();
         this.pista = pistaActual;
         generarPanelsinResolver();
         ruleta = new Ruleta();
-        if (numeroJugadores > 1) {
+        if (getUltimoGanador() == 5) {
             jugadorSeleccionado = new java.util.Random().nextInt(numeroJugadores - 1);
+
+        }
+        else {
+            jugadorSeleccionado = getUltimoGanador();
         }
         generarPartida(jugadorSeleccionado);
         while (!getPanelSolved()) {
@@ -140,6 +152,7 @@ public class EngineGUI {
 
         boolean status = true;
         while (status) {
+            setUltimoGanador(posicionPlayer);
             ventanaGUI(players[posicionPlayer].getName(), players[posicionPlayer].getMoney(), pista, enigmaProgreso,
                        players[posicionPlayer].getComodin());
             reproducirSonidoGirarRuleta();
@@ -310,7 +323,6 @@ public class EngineGUI {
                 else {
                     logger.info("La letra no existe");
                     reproducirSonidoError();
-                    players[posicionPlayer].setMoney(players[posicionPlayer].getMoney());
                     status = false;
                 }
                 break;
@@ -553,7 +565,7 @@ public class EngineGUI {
     private void reproducirSonidoError() {
         try {
             AudioInputStream audioInputStream =
-                    AudioSystem.getAudioInputStream(new File("assets/error.wav").getAbsoluteFile());
+                    AudioSystem.getAudioInputStream(new File("assets/fallo.wav").getAbsoluteFile());
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
