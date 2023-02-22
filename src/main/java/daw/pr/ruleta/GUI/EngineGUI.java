@@ -42,7 +42,6 @@ public class EngineGUI {
         while (!isGameFinished) {
             for (Player eachPlayer : players) {
                 eachPlayer.setMoney(eachPlayer.getMoneyAcumulado());
-
             }
             logger.info("Jugando partida " + numeroPartida);
             jugarPartida(numeroJugadores);
@@ -229,30 +228,19 @@ public class EngineGUI {
                 System.out.println("Introduzca la frase");
                 String fraseUser = definitions.teclado.nextLine().toUpperCase();
                 if (fraseUser.equalsIgnoreCase(frase)) {
-                    players[posicionPlayer].setMoneyAcumulado(players[posicionPlayer].getMoney() + premio);
+                    if (players[posicionPlayer].getMoneyAcumulado() < 50) {
+                        players[posicionPlayer].setMoneyAcumulado(players[posicionPlayer].getMoney() + 100);
+                    }
+                    else {
+                        players[posicionPlayer].setMoneyAcumulado(players[posicionPlayer].getMoney() + premio);
+                    }
                     logger.info("La frase se ha introducido correctamente");
                     setPanelSolved(true);
-                    // copiar contenido e enigmaPanel a enigmaProgreso
-                    /*
-                    for (int i = 0; i < enigmaPanel.length; i++) {
-                        System.arraycopy(enigmaPanel[i], 0, enigmaProgreso[i], 0, enigmaPanel[i].length);
-                        ventanaGUI(players[posicionPlayer].getName(), players[posicionPlayer].getMoney(), pista,
-                                   enigmaProgreso,
-                                   players[posicionPlayer].getComodin());
-                        // esperar 0.2 segundos /*
-
-                     */
-
-                    // Copiar contenido de enigmaPanel a enigmaProgreso de char en char uno a uno
-
                     for (int i = 0; i < enigmaPanel.length; i++) {
                         for (int j = 0; j < enigmaPanel[i].length; j++) {
                             enigmaProgreso[i][j] = enigmaPanel[i][j];
                             ventanaGUI(players[posicionPlayer].getName(), players[posicionPlayer].getMoney(), pista,
                                        enigmaProgreso, players[posicionPlayer].getComodin());
-                            // esperar 0.2 segundos
-
-
                             // Play a sound each time a letter is revealed
                             if (enigmaPanel[i][j] != '*') {
                                 reproducirSonidoFinalPanel();
@@ -274,7 +262,7 @@ public class EngineGUI {
                     reproducirSonidoError();
                     ventanaGUI(players[posicionPlayer].getName(), players[posicionPlayer].getMoney(), pista,
                                enigmaProgreso, players[posicionPlayer].getComodin());
-                    status = true;
+                    status = false;
                     reproducirSonidoError();
                     reproducirSonidoCambioTurno();
                 }
@@ -286,6 +274,7 @@ public class EngineGUI {
                     break;
                 }
                 else {
+                    definitions.teclado.nextLine();
                     System.out.println("Introduzca la vocal");
                     char vocal = definitions.teclado.nextLine().charAt(0);
                     vocal = Character.toUpperCase(vocal);
@@ -382,7 +371,6 @@ public class EngineGUI {
         return numeroJugadores;
     }
 
-    // Método para seleccionar una posicin del arrayList
 
     private Player registerPlayer() {
         String name = null;
@@ -399,7 +387,7 @@ public class EngineGUI {
                 definitions.teclado.nextLine();
             }
         }
-        /*
+        /* Preguntar a marta si hay que preguntar sobre el dinero
         flag = true;
         while (flag) {
             try {
