@@ -414,4 +414,75 @@ public class EngineGUI {
             System.out.println();
         }
     }
+
+    /**
+     * Método para comprobar si el char que metió el usuario se encuentra en el panel. Si
+     *
+     * @param vocal
+     * @return
+     */
+
+    public boolean comprobarVocal(char vocal) {
+        // check that the vocal is in the char[][] enigmaPanel
+        boolean status = false;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 14; j++) {
+                if (Character.toUpperCase(enigmaPanel[i][j]) == vocal) {
+                    System.out.println(enigmaPanel[i][j] + " = " + vocal);
+                    logger.info("enigmaPanel[" + i + "][" + j + "] = VOCAL FOUND COINDICENCIA AT : " + i + j + vocal);
+                    enigmaProgreso[i][j] = vocal;
+                    status = true;
+                }
+            }
+        }
+        return status;
+    }
+
+    private void reproducirSonidoGirarRuleta() {
+        try {
+            AudioInputStream audioInputStream =
+                    AudioSystem.getAudioInputStream(new File("assets/girarRuleta.wav").getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+            logger.error("Error al reproducir el sonido de error");
+        }
+    }
+
+    private void reproducirSonidoCambioTurno() {
+        try {
+            AudioInputStream audioInputStream =
+                    AudioSystem.getAudioInputStream(new File("assets/cambioTurno.wav").getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+            logger.error("Error al reproducir el sonido de error");
+        }
+    }
+
+    private void reproducirSonidoFinalPanel() {
+        try {
+            AudioInputStream audioInputStream =
+                    AudioSystem.getAudioInputStream(new File("assets/ok.wav").getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+            logger.error("Error al reproducir el sonido de error");
+        }
+    }
+
+    private void reproducirSonidoError() {
+        try {
+            AudioInputStream audioInputStream =
+                    AudioSystem.getAudioInputStream(new File("assets/error.wav").getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+            logger.error("Error al reproducir el sonido de error");
+        }
+    }
 }

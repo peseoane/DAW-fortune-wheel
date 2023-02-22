@@ -72,23 +72,4 @@ public class Player {
         this.money = money;
     }
 
-    public char buyVocal() {
-        char vocalSeleccionada = ' ';
-        System.out.println("Que vocal quiere comprar?");
-        String vocal = definitions.teclado.nextLine();
-        if (money >= definitions.CANTIDAD_VOCAL) {
-            switch (vocal.charAt(0)) {
-                case 'a', 'e', 'i', 'o', 'u' -> {
-                    vocalSeleccionada = vocal.charAt(0);
-                    money = money - definitions.CANTIDAD_VOCAL;
-                }
-                default -> {
-                    logger.error("El usuario no ha introducido vocal, turno perdido");
-                    turn = false;
-                }
-            }
-        }
-        return vocalSeleccionada;
-    }
-
 }
