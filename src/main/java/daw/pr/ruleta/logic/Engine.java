@@ -221,6 +221,7 @@ public class Engine {
                     break;
                 }
                 else {
+                    definitions.teclado.nextLine();
                     System.out.println("Introduzca la vocal");
                     char vocal = definitions.teclado.nextLine().charAt(0);
                     if (comprobarLetra(vocal) > 0) {
