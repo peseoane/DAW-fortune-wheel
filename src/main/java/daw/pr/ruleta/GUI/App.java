@@ -13,8 +13,19 @@ public class App {
 
     public static void main(String[] args) {
         logger.info("Iniciando juego...");
+        /*
+        // mostrar la clase spalsh durante 3 segundos.
+        splash splash = new splash();
+        splash.setVisible(true);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        */
         EngineGUI engineGUI = new EngineGUI();
     }
+
 
     public static void actualizarVentana(String jugador, int dinero, String pista, char[][] panel) {
         // Actualizar el panel de información del jugador.
@@ -27,6 +38,7 @@ public class App {
         JPanel panelContainer = (JPanel) frame.getContentPane().getComponent(1);
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 14; j++) {
+                buttons[i][j] = (JButton) panelContainer.getComponent(i * 14 + j);
                 buttons[i][j] = (JButton) panelContainer.getComponent(i * 14 + j);
                 buttons[i][j].setText(String.valueOf(panel[i][j]).toUpperCase());
                 if (panel[i][j] == '*') {
@@ -44,7 +56,7 @@ public class App {
     }
 
 
-    public static void ventanaGUI(String jugador, int dinero, String pista, char[][] panel) {
+    public static void ventanaGUI(String jugador, int dinero, String pista, char[][] panel, int comodin) {
 
         // Create a new JFrame
         if (frame == null) {
@@ -65,7 +77,9 @@ public class App {
         // Add a label for the player's money.
         playerInfoPanel.add(new JLabel(" | DINERO: "));
         playerInfoPanel.add(new JLabel(String.valueOf(dinero))); // Replace "leerDinero()" with the actual
-        // function call that returns the player's money.
+
+        playerInfoPanel.add(new JLabel(" | COMODINES: "));
+        playerInfoPanel.add(new JLabel(String.valueOf(comodin))); // Replace "leerD
         // Add the player info panel to the frame.
         frame.getContentPane().add(playerInfoPanel, BorderLayout.NORTH);
 
