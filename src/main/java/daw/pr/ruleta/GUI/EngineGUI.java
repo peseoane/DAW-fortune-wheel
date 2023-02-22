@@ -42,6 +42,7 @@ public class EngineGUI {
         while (!isGameFinished) {
             for (Player eachPlayer : players) {
                 eachPlayer.setMoney(eachPlayer.getMoneyAcumulado());
+
             }
             logger.info("Jugando partida " + numeroPartida);
             jugarPartida(numeroJugadores);
@@ -269,7 +270,6 @@ public class EngineGUI {
                     reproducirSonidoCambioTurno();
                 }
                 else {
-                    players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() - premio);
                     logger.info("La frase se ha introducido incorrectamente");
                     reproducirSonidoError();
                     ventanaGUI(players[posicionPlayer].getName(), players[posicionPlayer].getMoney(), pista,
