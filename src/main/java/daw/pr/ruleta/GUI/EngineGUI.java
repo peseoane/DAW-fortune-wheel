@@ -9,10 +9,6 @@ import daw.pr.ruleta.struct.definitions;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.sound.sampled.*;
-import java.io.File;
-import java.io.IOException;
-
 import static daw.pr.ruleta.GUI.App.ventanaGUI;
 import static java.lang.Integer.parseInt;
 
@@ -39,9 +35,6 @@ public class EngineGUI {
             logger.info("Jugador " + i + " registrado" + players[i].getName() + " " + players[i].getMoney());
         }
         while (!isGameFinished) {
-            for (Player eachPlayer : players) {
-                eachPlayer.setMoney(eachPlayer.getMoneyAcumulado());
-            }
             logger.info("Jugando partida " + numeroPartida);
             jugarPartida(numeroJugadores);
             numeroPartida++;
@@ -130,29 +123,29 @@ public class EngineGUI {
 
     public void generarPartida(int posicionPlayer) {
 
+        System.out.println("Turno de " + players[posicionPlayer].getName());
+        System.out.println("Dinero: " + players[posicionPlayer].getMoney());
+        System.out.println("Pista: " + pista);
 
         boolean status = true;
+        ventanaGUI(players[posicionPlayer].getName(), players[posicionPlayer].getMoney(), pista, enigmaProgreso);
         while (status) {
-            ventanaGUI(players[posicionPlayer].getName(), players[posicionPlayer].getMoney(), pista, enigmaProgreso,
-                       players[posicionPlayer].getComodin());
-            reproducirSonidoGirarRuleta();
             ruleta.girarRuleta();
+            ventanaGUI(players[posicionPlayer].getName(), players[posicionPlayer].getMoney(), pista, enigmaProgreso);
             String casilla = ruleta.getResultadoRuleta().toUpperCase();
             logger.info("La ruleta ha caído en " + casilla);
-            logger.info("El enigma es " + frase);
-            System.out.println("Turno de " + players[posicionPlayer].getName());
-            System.out.println("Dinero: " + players[posicionPlayer].getMoney());
-            System.out.println("Pista: " + pista);
+            System.out.println("La ruleta ha caído en " + casilla);
+            logger.info("El enigma es" + frase);
+            System.out.println("El enigma es" + frase);
             if (isNumeric(casilla)) {
                 status = menuPremioNumerico(posicionPlayer, parseInt(casilla));
-                logger.info("El jugador " + players[posicionPlayer].getName() + " su jugada ha sido: " + status);
+                logger.info("El jugador " + players[posicionPlayer].getName() + " ha decidido " + status);
             }
             else {
                 status = menuEspecial(posicionPlayer, casilla);
-                logger.info("El jugador " + players[posicionPlayer].getName() + " su jugada ha sido: " + status);
+                logger.info("El jugador " + players[posicionPlayer].getName() + " ha decidido " + status);
             }
         }
-
         logger.info("El jugador " + players[posicionPlayer].getName() + " ha terminado su turno");
     }
 
@@ -160,41 +153,33 @@ public class EngineGUI {
         boolean continuar = true;
         switch (casilla) {
             case "QUIEBRA":
-                reproducirSonidoError();
                 players[posicionPlayer].setMoney(0);
                 logger.info("El jugador " + players[posicionPlayer].getName() + " ha quedado en quiebra");
                 continuar = false;
-                reproducirSonidoCambioTurno();
                 break;
             case "PIERDE TURNO":
-                reproducirSonidoError();
                 if (players[posicionPlayer].getComodin() > 0) {
                     players[posicionPlayer].setComodin(players[posicionPlayer].getComodin() - 1);
                     logger.info("El jugador " + players[posicionPlayer].getName() + " ha usado un comodín");
-                    reproducirSonidoFinalPanel();
                     continuar = true;
                 }
                 else {
                     logger.info("El jugador " + players[posicionPlayer].getName() + " ha perdido el turno por no " +
                                         "tener comodines");
                     continuar = false;
-                    reproducirSonidoCambioTurno();
                 }
                 break;
             case "X2":
-                reproducirSonidoFinalPanel();
                 players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() * 2);
                 logger.info("El jugador " + players[posicionPlayer].getName() + " ha ganado el doble de dinero");
                 continuar = false;
                 break;
             case "1/2":
-                reproducirSonidoFinalPanel();
                 players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() / 2);
                 logger.info("El jugador " + players[posicionPlayer].getName() + " ha ganado la mitad de dinero");
                 continuar = false;
                 break;
             case "COMODÍN":
-                reproducirSonidoFinalPanel();
                 players[posicionPlayer].setComodin(players[posicionPlayer].getComodin() + 1);
                 logger.info("El jugador " + players[posicionPlayer].getName() + " ha ganado un comodín");
                 continuar = true;
@@ -219,108 +204,53 @@ public class EngineGUI {
             case 1:
                 definitions.teclado.nextLine();
                 System.out.println("Introduzca la frase");
-                String fraseUser = definitions.teclado.nextLine().toUpperCase();
+                String fraseUser = definitions.teclado.nextLine();
                 if (fraseUser.equalsIgnoreCase(frase)) {
-                    players[posicionPlayer].setMoneyAcumulado(players[posicionPlayer].getMoney() + premio);
+                    players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() + premio);
                     logger.info("La frase se ha introducido correctamente");
                     setPanelSolved(true);
-                    // copiar contenido e enigmaPanel a enigmaProgreso
-                    /*
-                    for (int i = 0; i < enigmaPanel.length; i++) {
-                        System.arraycopy(enigmaPanel[i], 0, enigmaProgreso[i], 0, enigmaPanel[i].length);
-                        ventanaGUI(players[posicionPlayer].getName(), players[posicionPlayer].getMoney(), pista,
-                                   enigmaProgreso,
-                                   players[posicionPlayer].getComodin());
-                        // esperar 0.2 segundos /*
-
-                     */
-
-                    // Copiar contenido de enigmaPanel a enigmaProgreso de char en char uno a uno
-
-                    for (int i = 0; i < enigmaPanel.length; i++) {
-                        for (int j = 0; j < enigmaPanel[i].length; j++) {
-                            enigmaProgreso[i][j] = enigmaPanel[i][j];
-                            ventanaGUI(players[posicionPlayer].getName(), players[posicionPlayer].getMoney(), pista,
-                                       enigmaProgreso, players[posicionPlayer].getComodin());
-                            // esperar 0.2 segundos
-
-
-                            // Play a sound each time a letter is revealed
-                            if (enigmaPanel[i][j] != '*') {
-                                reproducirSonidoFinalPanel();
-                            }
-
-
-                            try {
-                                Thread.sleep(200);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
                     status = false;
-                    reproducirSonidoCambioTurno();
                 }
                 else {
                     players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() - premio);
                     logger.info("La frase se ha introducido incorrectamente");
-                    reproducirSonidoError();
-                    ventanaGUI(players[posicionPlayer].getName(), players[posicionPlayer].getMoney(), pista,
-                               enigmaProgreso, players[posicionPlayer].getComodin());
                     status = true;
-                    reproducirSonidoError();
-                    reproducirSonidoCambioTurno();
                 }
                 break;
             case 2:
                 if (players[posicionPlayer].getMoney() < 50) {
-                    reproducirSonidoError();
                     System.out.println("No tienes suficiente dinero");
                     break;
                 }
                 else {
                     System.out.println("Introduzca la vocal");
                     char vocal = definitions.teclado.nextLine().charAt(0);
-                    vocal = Character.toUpperCase(vocal);
-                    players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() - 50);
-
-                    if (comprobarVocal(vocal)) {
-                        reproducirSonidoFinalPanel();
+                    if (comprobarLetra(vocal) > 0) {
+                        players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() - 50);
                         logger.info("La vocal se ha introducido correctamente");
-                        status = true;
+                        status = false;
                     }
                     else {
-                        reproducirSonidoError();
-                        logger.info("No existe la vocal!");
-                        status = false;
-
+                        players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() + 50);
+                        status = true;
                     }
                 }
                 break;
-
-
             case 3:
                 System.out.println("Introduzca la letra");
                 definitions.teclado.nextLine();
                 char letra = definitions.teclado.nextLine().charAt(0);
-                int contador = comprobarLetra(letra);
-                if (contador > 0) {
-                    logger.info("El premio total por la letra es: " + premio * contador + "ha habito " + contador +
-                                        " veces");
-                    players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() + premio * contador);
+                if (comprobarLetra(letra) > 0) {
+                    players[posicionPlayer].setMoney(players[posicionPlayer].getMoney() + premio);
                     status = true;
-                    reproducirSonidoFinalPanel();
                 }
                 else {
-                    logger.info("La letra no existe");
-                    reproducirSonidoError();
                     players[posicionPlayer].setMoney(players[posicionPlayer].getMoney());
                     status = false;
                 }
                 break;
             default:
                 System.out.println("Opción no válida");
-                reproducirSonidoError();
                 break;
         }
         return status;
@@ -334,24 +264,14 @@ public class EngineGUI {
 
     public int comprobarLetra(char letra) {
         int contador = 0;
-        if (Character.toUpperCase(letra) == 'A' || Character.toUpperCase(letra) == 'E' || Character.toUpperCase(letra) == 'I' || Character.toUpperCase(letra) == 'O' || Character.toUpperCase(letra) == 'U') {
-            System.err.println("Las vocales no son permitidas.");
-            contador = 0;
-            reproducirSonidoError();
-            reproducirSonidoCambioTurno();
-        }
-        else {
-            for (int i = 0; i < 4; i++) {
-                for (int j = 0; j < 14; j++) {
-                    if (Character.toUpperCase(enigmaPanel[i][j]) == Character.toUpperCase(letra)) {
-                        logger.info("enigmaPanel[" + i + "][" + j + "] = CHAR A COMPARAR ES: " + letra);
-                        enigmaProgreso[i][j] = letra;
-                        contador++;
-                    }
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 14; j++) {
+                if (enigmaPanel[i][j] == letra) {
+                    enigmaProgreso[i][j] = letra;
+                    contador++;
                 }
             }
         }
-        reproducirSonidoFinalPanel();
         return contador;
     }
 
@@ -392,7 +312,6 @@ public class EngineGUI {
                 definitions.teclado.nextLine();
             }
         }
-        /*
         flag = true;
         while (flag) {
             try {
@@ -408,7 +327,7 @@ public class EngineGUI {
                 logger.error("El dinero introducido no es válido");
                 definitions.teclado.nextLine();
             }
-         */
+        }
 
         logger.info("Nombre = " + name + " Dinero " + money);
         return new Player(name, (int) (money));
@@ -494,21 +413,5 @@ public class EngineGUI {
             }
             System.out.println();
         }
-    }
-
-    public boolean comprobarVocal(char vocal) {
-        // check that the vocal is in the char[][] enigmaPanel
-        boolean status = false;
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 14; j++) {
-                if (Character.toUpperCase(enigmaPanel[i][j]) == vocal) {
-                    System.out.println(enigmaPanel[i][j] + " = " + vocal);
-                    logger.info("enigmaPanel[" + i + "][" + j + "] = VOCAL FOUND COINDICENCIA AT : " + i + j + vocal);
-                    enigmaProgreso[i][j] = vocal;
-                    status = true;
-                }
-            }
-        }
-        return status;
     }
 }

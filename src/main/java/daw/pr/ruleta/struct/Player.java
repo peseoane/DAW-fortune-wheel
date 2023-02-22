@@ -22,7 +22,6 @@ public class Player {
         this.name = name;
         this.money = money;
         this.comodin = 0;
-        this.moneyAcumulado = 0;
     }
 
     public static Logger getLogger() {
@@ -31,15 +30,6 @@ public class Player {
 
     public static void setLogger(Logger logger) {
         Player.logger = logger;
-    }
-
-    public int getMoneyAcumulado() {
-
-        return moneyAcumulado;
-    }
-
-    public void setMoneyAcumulado(int moneyAcumulado) {
-        this.moneyAcumulado = moneyAcumulado;
     }
 
     public int getComodin() {
